@@ -2,11 +2,13 @@
   <v-navigation-drawer v-model="drawer" temporary>
     <v-list
       ><v-list-item
-        v-for="item in drawerItems"
+        v-for="item in filteredDrawerItems"
         :key="item.name"
         :to="item.path"
         link
         @click="handleClick(item)"
+        :prepend-icon="item.icon"
+        density="compact"
       >
         <v-list-item-title>{{ item.name }}</v-list-item-title>
       </v-list-item>
@@ -22,17 +24,18 @@
 </template>
 
 <script setup>
-const { drawerItems, drawer, toggleDrawer } = useNav();
-const { dialog, clearDialog, openAddDialog, openEditDialog } = useDialog();
+const { filteredDrawerItems, drawer } = useNav();
 const { logout } = useAuth();
 
 const showLoginDialog = ref(false);
 
 const handleClick = (item) => {
-  console.log(item);
-
   item.action === "login" ? openLoginDialog() : null;
-  item.action === "logout" ? logout() : null;
+  item.action === "logout" ? handleLogout() : null;
+};
+
+const handleLogout = () => {
+  logout();
 };
 
 const closeLoginDialog = () => {

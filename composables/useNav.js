@@ -1,11 +1,11 @@
 const drawer = ref(false);
 
 export const useNav = () => {
-  const { drawerItems } = useDrawerItems();
+  const { filteredDrawerItems } = useDrawerItems();
 
   const toggleDrawer = () => {
     drawer.value = !drawer.value;
   };
 
-  return { drawer, drawerItems, toggleDrawer };
+  return { drawer, filteredDrawerItems, toggleDrawer };
 };

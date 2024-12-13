@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <av-toolbar />
+    <av-nav-drawer />
 
     <main>
       <v-container>
         <NuxtPage />
       </v-container>
     </main>
-    <av-nav-drawer />
   </v-app>
 </template>
 

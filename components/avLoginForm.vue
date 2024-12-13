@@ -28,7 +28,7 @@
       v-if="!showResetPassword"
       block
       color="info"
-      @click="signInWithEmail(formData.email, formData.password)"
+      @click="handleSignInWithEmail(formData.email, formData.password)"
       >Sign In</v-btn
     >
     <v-btn
@@ -67,6 +67,12 @@ const supabase = useSupabaseClient();
 const { signInWithEmail, errorMessage } = useAuth();
 
 const emit = defineEmits(["closeLoginDialog"]);
+
+const handleSignInWithEmail = async (email, password) => {
+  await signInWithEmail(email, password);
+  emit("closeLoginDialog");
+  router.push("/");
+};
 
 const gotoNewUser = () => {
   emit("closeLoginDialog");

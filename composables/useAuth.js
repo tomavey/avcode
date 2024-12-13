@@ -63,8 +63,11 @@ export const useAuth = () => {
       console.log("Error", error);
       errorMessage.value = error.message;
     } else {
-      loginSuccess.value = true;
-      // showSnackbar(`${email} is signed in.`)
+      showSnackbar(`${email} is signed in.`);
+      setTimeout(() => {
+        window.location.href =
+          window.location.origin + window.location.pathname;
+      }, 3000); // 3000 milliseconds = 3 seconds
     }
   };
 
@@ -91,5 +94,6 @@ export const useAuth = () => {
     signInWithEmail,
     signOut,
     errorMessage,
+    isLoggedIn,
   };
 };
