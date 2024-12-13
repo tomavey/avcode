@@ -19,7 +19,7 @@ export const useAuth = () => {
       setTimeout(() => {
         window.location.href =
           window.location.origin + window.location.pathname;
-      }, 3000); // 3000 milliseconds = 3 seconds
+      }, 1000); // 3000 milliseconds = 3 seconds
     }
   };
 
