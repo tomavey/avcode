@@ -3,4 +3,8 @@
     <NuxtLayout />
   </div>
 </template>
-a
+
+<script setup>
+const { settingsObj, fetchSettings } = useSettings();
+onMounted(fetchSettings);
+</script>

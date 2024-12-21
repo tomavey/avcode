@@ -21,6 +21,13 @@ const drawerItems = [
     sortOrder: 4,
   },
   {
+    name: "Settings",
+    path: "/settings",
+    rights: "admin",
+    icon: "mdi-information",
+    sortOrder: 4,
+  },
+  {
     name: "Login",
     action: "login",
     rights: "admin",

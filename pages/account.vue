@@ -4,9 +4,11 @@ definePageMeta({
 });
 
 const supabase = useSupabaseClient();
-const profile = useProfiles();
+const { profile, updateProfile } = useProfiles();
+const router = useRouter();
+const { showSnackbar, snackbar } = useSnackbar();
 
-const loading = ref(true);
+const loading = ref(false);
 const first_name = ref("");
 const last_name = ref("");
 const email = ref("");
@@ -15,63 +17,15 @@ const phone = ref("");
 
 const possibleRights = ["admin", "user"];
 
-loading.value = true;
 const user = useSupabaseUser();
 
-const { data } = await supabase
-  .from("profiles")
-  .select(`first_name, last_name, email, authorized_to, phone`)
-  .eq("id", user.value.id)
-  .single();
-
-if (data) {
-  first_name.value = data.first_name;
-  last_name.value = data.last_name;
-  email.value = data.email;
-  authorized_to.value = data.authorized_to;
-  phone.value = data.phone;
-}
-
-loading.value = false;
-
-async function updateProfile() {
-  try {
-    loading.value = true;
-    const user = useSupabaseUser();
-
-    const updates = {
-      id: user.value.id,
-      email: email.value,
-      last_name: last_name.value,
-      first_name: first_name.value,
-      authorized_to: authorized_to.value,
-      phone: phone.value,
-      updated_at: new Date(),
-    };
-
-    const { error } = await supabase.from("profiles").upsert(updates, {
-      returning: "minimal", // Don't return the value after inserting
-    });
-    if (error) throw error;
-  } catch (error) {
-    alert(error.message);
-  } finally {
-    loading.value = false;
-  }
-}
-
-async function signOut() {
-  try {
-    loading.value = true;
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-    user.value = null;
-  } catch (error) {
-    alert(error.message);
-  } finally {
-    loading.value = false;
-  }
-}
+const handleUpdateProfile = async (profile) => {
+  loading.value = true;
+  await updateProfile(profile);
+  loading.value = false;
+  showSnackbar("Profile updated successfully.");
+  router.push("/");
+};
 </script>
 
 <style scoped>
@@ -88,29 +42,28 @@ async function signOut() {
 <template>
   <v-container>
     <h2 class="text-center mb-10">Subscriber account information.</h2>
-    {{ user }}
-    {{ profile }}
+    {{ profile }}{{ loading }}
     <v-form class="form">
       <v-text-field
-        v-model="first_name"
+        v-model="profile.first_name"
         label="First Name"
         required
       ></v-text-field>
 
       <v-text-field
-        v-model="last_name"
+        v-model="profile.last_name"
         label="Last Name"
         required
       ></v-text-field>
 
       <v-text-field
-        v-model="email"
+        v-model="profile.email"
         label="Email to send notifactions to"
         required
       ></v-text-field>
 
       <v-select
-        v-model="authorized_to"
+        v-model="profile.authorized_to"
         :items="possibleRights"
         label="Rights"
         multiple
@@ -118,12 +71,12 @@ async function signOut() {
       ></v-select>
 
       <v-text-field
-        v-model="phone"
+        v-model="profile.phone"
         label="Phone Number"
         required
       ></v-text-field>
 
-      <v-btn @click="updateProfile" block>Submit</v-btn>
+      <v-btn @click="handleUpdateProfile(profile)" block>Submit</v-btn>
     </v-form>
   </v-container>
 </template>

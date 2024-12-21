@@ -3,6 +3,7 @@ const profile = ref({});
 export const useProfiles = () => {
   const supabase = useSupabaseClient();
   const user = useSupabaseUser();
+  const { clearDialog } = useDialog();
 
   const users = ref([]);
 
