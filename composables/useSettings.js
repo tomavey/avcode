@@ -74,6 +74,22 @@ export function useSettings() {
     }
   };
 
+  const getSetting = (key) => {
+    if (settingsObj.value[key] !== undefined) {
+      const setting = settingsObj.value[key];
+      if (setting === "true") {
+        return true;
+      } else if (setting === "false") {
+        return false;
+      } else {
+        return setting;
+      }
+    } else {
+      error.value = `Setting with key ${key} not found.`;
+      return null;
+    }
+  };
+
   const settingsObj = computed(() => {
     const obj = {};
     settings.value.forEach((setting) => {
@@ -95,5 +111,6 @@ export function useSettings() {
     editSetting,
     handleUpdateSetting,
     deleteSetting,
+    getSetting,
   };
 }
