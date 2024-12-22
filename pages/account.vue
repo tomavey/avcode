@@ -7,6 +7,7 @@ const supabase = useSupabaseClient();
 const { profile, updateProfile } = useProfiles();
 const router = useRouter();
 const { showSnackbar, snackbar } = useSnackbar();
+const { settingsObj, settings, fetchSettings } = useSettings();
 
 const loading = ref(false);
 const first_name = ref("");
@@ -14,8 +15,6 @@ const last_name = ref("");
 const email = ref("");
 const authorized_to = ref("");
 const phone = ref("");
-
-const possibleRights = ["admin", "user"];
 
 const user = useSupabaseUser();
 
@@ -26,6 +25,26 @@ const handleUpdateProfile = async (profile) => {
   showSnackbar("Profile updated successfully.");
   router.push("/");
 };
+
+const possibleRightsArr = computed(() => {
+  if (settingsObj.value.possibleRights) {
+    let str = settingsObj.value.possibleRights;
+    return stringToArray(str);
+  }
+  return [];
+});
+
+const stringToArray = (str) => {
+  // Remove the surrounding square brackets if present
+  str = str.replace(/\[|\]/g, "");
+
+  // Split the string by commas and trim each element
+  return str.split(",").map((item) => item.trim());
+};
+
+onMounted(async () => {
+  await fetchSettings();
+});
 </script>
 
 <style scoped>
@@ -42,7 +61,6 @@ const handleUpdateProfile = async (profile) => {
 <template>
   <v-container>
     <h2 class="text-center mb-10">Subscriber account information.</h2>
-    {{ profile }}{{ loading }}
     <v-form class="form">
       <v-text-field
         v-model="profile.first_name"
@@ -61,10 +79,9 @@ const handleUpdateProfile = async (profile) => {
         label="Email to send notifactions to"
         required
       ></v-text-field>
-
       <v-select
         v-model="profile.authorized_to"
-        :items="possibleRights"
+        :items="possibleRightsArr"
         label="Rights"
         multiple
         required
