@@ -7,7 +7,15 @@ export function useSettings() {
   const newSetting = ref({ key: "", value: "", type: "" });
   const editedSetting = ref({ id: null, key: "", value: "", type: "" });
   const dialog = ref(false);
-  const settingTypes = ["binary", "array", "numeric", "text"];
+  const settingTypes = ref([]);
+
+  const setSettingTypes = () => {
+    if (settingsObj.value.settingTypes) {
+      settingTypes.value = JSON.parse(settingsObj.value.settingTypes);
+    } else {
+      settingTypes.value = [];
+    }
+  };
 
   const headers = [
     { text: "Key", value: "key" },
@@ -96,6 +104,11 @@ export function useSettings() {
       obj[setting.key] = setting.value;
     });
     return obj;
+  });
+
+  watchEffect(() => {
+    fetchSettings();
+    setSettingTypes();
   });
 
   return {
