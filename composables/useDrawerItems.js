@@ -28,6 +28,13 @@ const drawerItems = [
     sortOrder: 4,
   },
   {
+    name: "Pages",
+    path: "/pages",
+    rights: "admin",
+    icon: "mdi-information",
+    sortOrder: 5,
+  },
+  {
     name: "Login",
     action: "login",
     rights: "admin",
