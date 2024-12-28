@@ -1,94 +1,129 @@
 <template>
   <div>
     <div v-if="editor && showToolbar">
-      <button
+      <v-btn
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
-      >
-        bold
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-bold"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleItalic().run()"
         :disabled="!editor.can().chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
-      >
-        italic
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-italic"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleStrike().run()"
         :disabled="!editor.can().chain().focus().toggleStrike().run()"
         :class="{ 'is-active': editor.isActive('strike') }"
-      >
-        strike
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-strikethrough"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleCode().run()"
         :disabled="!editor.can().chain().focus().toggleCode().run()"
         :class="{ 'is-active': editor.isActive('code') }"
-      >
-        code
-      </button>
-      <button @click="editor.chain().focus().unsetAllMarks().run()">
-        clear marks
-      </button>
-      <button @click="editor.chain().focus().clearNodes().run()">
-        clear nodes
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-xml"
+      />
+      <v-btn
+        @click="editor.chain().focus().unsetAllMarks().run()"
+        density="dense"
+        elevation="0"
+        icon="mdi-format-clear"
+      />
+      <v-btn
+        @click="editor.chain().focus().clearNodes().run()"
+        density="dense"
+        elevation="0"
+        icon="mdi-format-clear"
+      />
+      <v-btn
         @click="editor.chain().focus().setParagraph().run()"
-        :class="{ 'is-active': editor.isActive('paragraph') }"
-      >
-        paragraph
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-paragraph"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
-      >
-        h1</button
-      >updateContent
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-header-1"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }"
-      >
-        h2
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-header-2"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }"
-      >
-        h3
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-header-3"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }"
-      >
-        h4
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-header-4"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }"
-      >
-        h5
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-header-5"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-        :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }"
-      >
-        h6
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-header-6"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleBulletList().run()"
-        :class="{ 'is-active': editor.isActive('bulletList') }"
-      >
-        bullet list
-      </button>
-      <button
+        density="dense"
+        elevation="0"
+        icon="mdi-format-list-bulleted"
+      />
+      <v-btn
         @click="editor.chain().focus().toggleOrderedList().run()"
-        :class="{ 'is-active': editor.isActive('orderedList') }"
-      >
-        ordered list
-      </button>
+        density="dense"
+        elevation="0"
+        icon="mdi-format-list-numbered"
+      />
+      <v-btn
+        @click="editor.chain().focus().setHorizontalRule().run()"
+        density="dense"
+        elevation="0"
+        icon="mdi-minus"
+      />
+      <v-btn
+        @click="editor.chain().focus().setHardBreak().run()"
+        density="dense"
+        elevation="0"
+        icon="mdi-keyboard-return"
+      />
+      <v-btn
+        @click="editor.chain().focus().undo().run()"
+        density="dense"
+        elevation="0"
+        icon="mdi-undo"
+      />
+      <v-btn
+        @click="editor.chain().focus().redo().run()"
+        density="dense"
+        elevation="0"
+        icon="mdi-redo"
+      />
+      <hr />
       <button
         @click="editor.chain().focus().toggleCodeBlock().run()"
         :class="{ 'is-active': editor.isActive('codeBlock') }"
@@ -100,24 +135,6 @@
         :class="{ 'is-active': editor.isActive('blockquote') }"
       >
         blockquote
-      </button>
-      <button @click="editor.chain().focus().setHorizontalRule().run()">
-        horizontal rule
-      </button>
-      <button @click="editor.chain().focus().setHardBreak().run()">
-        hard break
-      </button>
-      <button
-        @click="editor.chain().focus().undo().run()"
-        :disabled="!editor.can().chain().focus().undo().run()"
-      >
-        undo
-      </button>
-      <button
-        @click="editor.chain().focus().redo().run()"
-        :disabled="!editor.can().chain().focus().redo().run()"
-      >
-        redo
       </button>
     </div>
     <TiptapEditorContent :editor="editor" class="tiptapeditorcontent" />
@@ -133,7 +150,7 @@ const props = defineProps({
   },
   showToolbar: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 });
 
