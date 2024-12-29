@@ -1,11 +1,44 @@
 <template>
   <div>
     <div v-if="editor && showToolbar">
+      <bubble-menu
+        :editor="editor"
+        :tippy-options="{ duration: 100 }"
+        v-if="editor"
+      >
+        <div class="bubble-menu">
+          <v-btn
+            @click="editor.chain().focus().toggleBold().run()"
+            :disabled="!editor.can().chain().focus().toggleBold().run()"
+            :class="{ 'is-active': editor.isActive('bold') }"
+            density="compact"
+            elevation="0"
+            icon="mdi-format-bold"
+          />
+          <v-btn
+            @click="editor.chain().focus().toggleItalic().run()"
+            :disabled="!editor.can().chain().focus().toggleItalic().run()"
+            :class="{ 'is-active': editor.isActive('italic') }"
+            density="compact"
+            elevation="0"
+            icon="mdi-format-italic"
+          />
+
+          <v-btn
+            @click="editor.chain().focus().toggleStrike().run()"
+            :disabled="!editor.can().chain().focus().toggleStrike().run()"
+            :class="{ 'is-active': editor.isActive('strike') }"
+            density="compact"
+            elevation="0"
+            icon="mdi-format-strikethrough"
+          />
+        </div>
+      </bubble-menu>
       <v-btn
         @click="editor.chain().focus().toggleBold().run()"
         :disabled="!editor.can().chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-bold"
       />
@@ -13,7 +46,7 @@
         @click="editor.chain().focus().toggleItalic().run()"
         :disabled="!editor.can().chain().focus().toggleItalic().run()"
         :class="{ 'is-active': editor.isActive('italic') }"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-italic"
       />
@@ -21,109 +54,109 @@
         @click="editor.chain().focus().toggleStrike().run()"
         :disabled="!editor.can().chain().focus().toggleStrike().run()"
         :class="{ 'is-active': editor.isActive('strike') }"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-strikethrough"
       />
-      <v-btn
+      <!-- <v-btn
         @click="editor.chain().focus().toggleCode().run()"
         :disabled="!editor.can().chain().focus().toggleCode().run()"
         :class="{ 'is-active': editor.isActive('code') }"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-xml"
-      />
-      <v-btn
+      /> -->
+      <!-- <v-btn
         @click="editor.chain().focus().unsetAllMarks().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-clear"
       />
       <v-btn
         @click="editor.chain().focus().clearNodes().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-clear"
-      />
+      /> -->
       <v-btn
         @click="editor.chain().focus().setParagraph().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-paragraph"
       />
       <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-header-1"
       />
       <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-header-2"
       />
       <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-header-3"
       />
       <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 4 }).run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-header-4"
       />
       <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 5 }).run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-header-5"
       />
       <v-btn
         @click="editor.chain().focus().toggleHeading({ level: 6 }).run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-header-6"
       />
       <v-btn
         @click="editor.chain().focus().toggleBulletList().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-list-bulleted"
       />
       <v-btn
         @click="editor.chain().focus().toggleOrderedList().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-format-list-numbered"
       />
       <v-btn
         @click="editor.chain().focus().setHorizontalRule().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-minus"
       />
       <v-btn
         @click="editor.chain().focus().setHardBreak().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-keyboard-return"
       />
       <v-btn
         @click="editor.chain().focus().undo().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-undo"
       />
       <v-btn
         @click="editor.chain().focus().redo().run()"
-        density="dense"
+        density="compact"
         elevation="0"
         icon="mdi-redo"
       />
-      <hr />
+      <!-- <hr />
       <button
         @click="editor.chain().focus().toggleCodeBlock().run()"
         :class="{ 'is-active': editor.isActive('codeBlock') }"
@@ -135,13 +168,18 @@
         :class="{ 'is-active': editor.isActive('blockquote') }"
       >
         blockquote
-      </button>
+      </button> -->
     </div>
-    <TiptapEditorContent :editor="editor" class="tiptapeditorcontent" />
+    <v-card>
+      <v-card-text>
+        <TiptapEditorContent :editor="editor" class="tiptapeditorcontent" />
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
 <script setup>
+import { BubbleMenu, Editor, EditorContent } from "@tiptap/vue-3";
 const emit = defineEmits(["update-content"]);
 const props = defineProps({
   modelValue: {
@@ -169,7 +207,6 @@ onBeforeUnmount(() => {
 
 <style>
 .tiptapeditorcontent {
-  border: 1px solid #102035;
   border-radius: 4px;
   padding: 10px;
   margin-top: 10px;
