@@ -3,7 +3,7 @@
     <div v-if="editor && showToolbar">
       <bubble-menu
         :editor="editor"
-        :tippy-options="{ duration: 100 }"
+        :tippy-options="{ placement: 'right', duration: 100 }"
         v-if="editor"
       >
         <div class="bubble-menu">
@@ -171,15 +171,13 @@
       </button> -->
     </div>
     <v-card>
-      <v-card-text>
-        <TiptapEditorContent :editor="editor" class="tiptapeditorcontent" />
-      </v-card-text>
+      <TiptapEditorContent :editor="editor" class="tiptapeditorcontent" />
     </v-card>
   </div>
 </template>
 
 <script setup>
-import { BubbleMenu, Editor, EditorContent } from "@tiptap/vue-3";
+import { BubbleMenu } from "@tiptap/vue-3";
 const emit = defineEmits(["update-content"]);
 const props = defineProps({
   modelValue: {

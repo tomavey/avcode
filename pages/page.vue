@@ -1,8 +1,8 @@
 <template>
-  <v-container>
+  <v-container class="mt-10">
     <v-card>
       <v-card-title>{{ page.title }}</v-card-title>
-      <v-card-text>{{ page.content }}</v-card-text>
+      <v-card-text v-html="page.content" />
       <v-card-actions>
         <v-btn :href="`/page?id=${page.id}`" color="primary">View Page</v-btn>
       </v-card-actions>

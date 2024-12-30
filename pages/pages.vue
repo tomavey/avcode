@@ -4,12 +4,14 @@
       <v-col v-for="page in pages" :key="page.id" cols="12">
         <v-card>
           <v-card-title>{{ page.title }}</v-card-title>
-          <v-card-text>{{ page.content }}</v-card-text>
+          <v-card-text v-html="page.content" />
           <v-card-actions>
             <v-btn :href="`/page?id=${page.id}`" color="primary"
               >View Page</v-btn
             >
             <v-btn @click="editPage(page)" color="secondary">Edit Page</v-btn>
+            <v-btn @click="defineLazyEventHandler            <v-btn @click="editPage(page)" color="secondary">Edit Page</v-btn>
+            Page(page)" color="secondary">Edit Page</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
