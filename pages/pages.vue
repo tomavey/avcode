@@ -1,30 +1,43 @@
 <template>
   <v-container class="my-10">
+    <v-btn @click="dialog = true" color="primary" icon class="mb-3">
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
     <v-row>
       <v-col v-for="page in pages" :key="page.id" cols="12">
         <v-card>
           <v-card-title>{{ page.title }}</v-card-title>
           <v-card-text v-html="page.content" />
           <v-card-actions>
-            <v-btn :href="`/page?id=${page.id}`" color="primary"
-              >View Page</v-btn
+            <v-btn :href="`/page?id=${page.id}`" color="primary" icon
+              ><v-icon>mdi-eye</v-icon></v-btn
             >
-            <v-btn @click="editPage(page)" color="secondary">Edit Page</v-btn>
-            <v-btn @click="defineLazyEventHandler            <v-btn @click="editPage(page)" color="secondary">Edit Page</v-btn>
-            Page(page)" color="secondary">Edit Page</v-btn>
+            <v-btn @click="editPage(page)" color="secondary" icon
+              ><v-icon>mdi-pencil</v-icon></v-btn
+            >
+            <v-btn @click="deletePage(page.id)" color="error" icon
+              ><v-icon>mdi-trash-can</v-icon></v-btn
+            >
           </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
-    <v-form @submit.prevent="addPage">
-      <v-text-field
-        v-model="newPage.title"
-        label="Title"
-        required
-      ></v-text-field>
-      <tiptap-editor @update-content="update_content" />
-      <v-btn type="submit" color="primary">Add Page</v-btn>
-    </v-form>
+    <v-dialog v-model="dialog" max-width="800px">
+      <v-card>
+        <v-card-title>{{ newPage.id ? "Edit" : "Add" }} Page</v-card-title>
+        <v-card-text>
+          <v-form @submit.prevent="addPage">
+            <v-text-field
+              v-model="newPage.title"
+              label="Title"
+              required
+            ></v-text-field>
+            <av-Tiptap-editor @update-content="update_content" />
+            <v-btn type="submit" color="primary">Add Page</v-btn>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -33,6 +46,8 @@ const supabase = useSupabaseClient();
 const pageTitle = ref("pages");
 
 const pages = ref([]);
+
+const dialog = ref(false);
 
 const newPage = ref({
   title: "",
@@ -79,6 +94,17 @@ const addPage = async () => {
 const editPage = (page) => {
   console.log("Edit page", page);
   newPage.value = { ...page };
+};
+
+const deletePage = async (id) => {
+  if (confirm("Are you sure you want to delete this page?")) {
+    const { data, error } = await supabase.from("pages").delete().eq("id", id);
+    if (error) {
+      console.error(error);
+    } else {
+      fetchPages();
+    }
+  }
 };
 
 const update_content = (content) => {

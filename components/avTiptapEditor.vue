@@ -58,6 +58,28 @@
         elevation="0"
         icon="mdi-format-strikethrough"
       />
+      <v-btn
+        @click="editor.chain().focus().setTextAlign('left').run()"
+        :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }"
+        icon="mdi-format-align-left"
+        elevation="0"
+        density="compact"
+      />
+      <v-btn
+        @click="editor.chain().focus().setTextAlign('center').run()"
+        :class="{ 'is-active': editor.isActive({ textAlign: 'center' }) }"
+        icon="mdi-format-align-center"
+        elevation="0"
+        density="compact"
+      />
+      <v-btn
+        @click="editor.chain().focus().setTextAlign('right').run()"
+        :class="{ 'is-active': editor.isActive({ textAlign: 'right' }) }"
+        icon="mdi-format-align-right"
+        elevation="0"
+        density="compact"
+      />
+
       <!-- <v-btn
         @click="editor.chain().focus().toggleCode().run()"
         :disabled="!editor.can().chain().focus().toggleCode().run()"
@@ -178,6 +200,8 @@
 
 <script setup>
 import { BubbleMenu } from "@tiptap/vue-3";
+import TextAlign from "@tiptap/extension-text-align";
+import Youtube from "@tiptap/extension-youtube";
 const emit = defineEmits(["update-content"]);
 const props = defineProps({
   modelValue: {
@@ -192,7 +216,12 @@ const props = defineProps({
 
 const editor = useEditor({
   content: props.modelValue,
-  extensions: [TiptapStarterKit],
+  extensions: [
+    TiptapStarterKit,
+    TextAlign.configure({
+      types: ["heading", "paragraph"],
+    }),
+  ],
   onUpdate: ({ editor }) => {
     emit("update-content", editor.getHTML());
   },
