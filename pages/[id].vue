@@ -1,9 +1,15 @@
 <template>
   <v-container class="mt-10">
-    <v-card>
-      <v-card-title>{{ page.title }}</v-card-title>
-      <v-card-text v-html="page.content" />
-    </v-card>
+    <div v-if="page.show_card">
+      <v-card v-if="page.title">
+        <v-card-title>{{ page.title }}</v-card-title>
+        <v-card-text v-html="page.content" />
+      </v-card>
+    </div>
+    <div v-else>
+      <h1>{{ page.title }}</h1>
+      <div v-html="page.content" />
+    </div>
   </v-container>
 </template>
 
@@ -23,7 +29,7 @@ const fetchPageData = async (id) => {
     if (!isNaN(id)) {
       query = supabase.from("pages").select("*").eq("id", id).single();
     } else {
-      query = supabase.from("pages").select("*").eq("page_name", id).single();
+      query = supabase.from("pages").select("*").eq("nav_name", id).single();
     }
 
     const { data, error } = await query;

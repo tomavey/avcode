@@ -35,6 +35,13 @@ const drawerItems = [
     sortOrder: 5,
   },
   {
+    name: "Test",
+    path: "/test",
+    rights: "admin",
+    icon: "mdi-information",
+    sortOrder: 5,
+  },
+  {
     name: "Login",
     action: "login",
     rights: "admin",
