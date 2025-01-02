@@ -3,9 +3,6 @@
     <v-card>
       <v-card-title>{{ page.title }}</v-card-title>
       <v-card-text v-html="page.content" />
-      <v-card-actions>
-        <v-btn :href="`/page?id=${page.id}`" color="primary">View Page</v-btn>
-      </v-card-actions>
     </v-card>
   </v-container>
 </template>
@@ -19,18 +16,21 @@ const pageTitle = ref("pages");
 const page = ref({ title: "", content: "", id: "" });
 
 onMounted(async () => {
-  const { id } = route.query;
-  if (id) {
-    const { data, error } = await supabase
-      .from("pages")
-      .select("*")
-      .eq("id", id)
-      .single();
-    if (data) {
-      page.value = data;
-    } else {
-      console.error(error);
-    }
+  const { id } = route.params;
+  let query = supabase.from("pages").select("*").single();
+
+  if (!isNaN(id)) {
+    query = query.eq("id", id);
+  } else {
+    query = query.eq("page_name", id);
+  }
+
+  const { data, error } = await query;
+
+  if (data) {
+    page.value = data;
+  } else {
+    console.error(error);
   }
 });
 </script>

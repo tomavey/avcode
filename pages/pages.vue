@@ -26,6 +26,8 @@
         <v-card>
           <v-card-title>{{ page.title.toString() }}</v-card-title>
           <v-card-text v-html="page.content" />
+          <v-card-text v-if="page.page_name" v-html="page.page_name" />
+
           <v-card-actions>
             <v-btn :href="`/page?id=${page.id}`" color="primary" icon
               ><v-icon>mdi-eye</v-icon></v-btn
