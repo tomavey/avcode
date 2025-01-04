@@ -2,7 +2,7 @@
   <v-navigation-drawer v-model="drawer" temporary>
     <v-list
       ><v-list-item
-        v-for="item in filteredDrawerItems"
+        v-for="item in combinedDrawerItems"
         :key="item.name"
         :to="item.path"
         link
@@ -24,8 +24,9 @@
 </template>
 
 <script setup>
-const { filteredDrawerItems, drawer } = useNav();
+const { filteredDrawerItems, drawer, navPages, combinedDrawerItems } = useNav();
 const { logout } = useAuth();
+const supabase = useSupabaseClient();
 
 const showLoginDialog = ref(false);
 
@@ -33,6 +34,10 @@ const handleClick = (item) => {
   item.action === "login" ? openLoginDialog() : null;
   item.action === "logout" ? handleLogout() : null;
 };
+
+const combinedItems = computed(() => {
+  return [...filteredDrawerItems.value, ...navPages.value];
+});
 
 const handleLogout = () => {
   logout();

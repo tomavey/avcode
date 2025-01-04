@@ -35,13 +35,6 @@ const drawerItems = [
     sortOrder: 5,
   },
   {
-    name: "Test",
-    path: "/test",
-    rights: "admin",
-    icon: "mdi-information",
-    sortOrder: 5,
-  },
-  {
     name: "Login",
     action: "login",
     rights: "admin",
@@ -59,19 +52,27 @@ const drawerItems = [
 
 export const useDrawerItems = () => {
   const user = useSupabaseUser();
+  const { navPages } = usePages();
 
   const isLoggedIn = computed(() => {
     return user?.value?.id;
   });
 
-  const filteredDrawerItems = drawerItems.filter((item) => {
-    if (item.action === "login") {
-      return !isLoggedIn.value;
-    } else if (item.action === "logout") {
-      return isLoggedIn.value;
-    } else {
-      return true;
-    }
+  const filteredDrawerItems = computed(() => {
+    return drawerItems.filter((item) => {
+      if (item.action === "login") {
+        return !isLoggedIn.value;
+      } else if (item.action === "logout") {
+        return isLoggedIn.value;
+      } else {
+        return true;
+      }
+    });
   });
-  return { filteredDrawerItems };
+
+  const combinedDrawerItems = computed(() => {
+    return [...filteredDrawerItems.value, ...navPages.value];
+  });
+
+  return { filteredDrawerItems, combinedDrawerItems, navPages };
 };
