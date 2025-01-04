@@ -29,7 +29,7 @@ const fetchPageData = async (id) => {
     if (!isNaN(id)) {
       query = supabase.from("pages").select("*").eq("id", id).single();
     } else {
-      query = supabase.from("pages").select("*").eq("nav_name", id).single();
+      query = supabase.from("pages").select("*").eq("nav_path", id).single();
     }
 
     const { data, error } = await query;
