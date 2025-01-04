@@ -57,6 +57,44 @@
               v-model="newPage.content"
             />
             <v-btn @click="addPage" color="primary">Add Page</v-btn>
+            <div v-if="makeNav">
+              <v-alert class="text-center my-5" type="success">
+                These fields make this page show up in the navigation drawer as
+                a menu item.
+              </v-alert>
+              <v-text-field
+                v-model="newPage.nav_name"
+                label="Nav Name"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_path"
+                label="Nav Path"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_icon"
+                label="Nav Icon"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_order"
+                label="Nav Order"
+                type="number"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_rights"
+                label="Nav Rights"
+              ></v-text-field>
+            </div>
+            <v-btn
+              icon
+              elevation="0"
+              style="float: right"
+              @click="makeNav = !makeNav"
+              ><v-icon>mdi-menu-down-outline </v-icon>
+              <v-tooltip activator="parent" location="start"
+                >Toggle fields that turn this page into a nav drawer
+                item</v-tooltip
+              ></v-btn
+            >
           </v-form>
         </v-card-text>
         {{ newPage }}
@@ -72,6 +110,8 @@ const pageTitle = ref("pages");
 const pages = ref([]);
 
 const dialog = ref(false);
+
+const makeNav = ref(false);
 
 const newPage = ref({
   title: "",

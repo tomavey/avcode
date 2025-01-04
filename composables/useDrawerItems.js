@@ -71,7 +71,9 @@ export const useDrawerItems = () => {
   });
 
   const combinedDrawerItems = computed(() => {
-    return [...filteredDrawerItems.value, ...navPages.value];
+    return [...filteredDrawerItems.value, ...navPages.value].sort(
+      (a, b) => a.sortOrder - b.sortOrder
+    );
   });
 
   return { filteredDrawerItems, combinedDrawerItems, navPages };

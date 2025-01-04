@@ -17,10 +17,10 @@ export const usePages = () => {
 
     navPages.value = data.map((page) => ({
       name: page.nav_name,
-      path: `/${page.nav_name}`,
-      rights: "admin",
-      icon: "mdi-information",
-      sortOrder: 9,
+      path: `/${page.nav_path}`,
+      rights: page.nav_rights,
+      icon: page.nav_icon,
+      sortOrder: page.nav_sort_order,
     }));
   };
 
