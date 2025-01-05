@@ -34,7 +34,11 @@
         <v-card>
           <v-card-title>{{ page.title.toString() }}</v-card-title>
           <v-card-text v-html="page.content" />
-          <v-card-text v-if="page.nav_name" v-html="page.nav_name" />
+          <v-card-subtitle
+            v-if="page.nav_name"
+            style="float: right"
+            v-html="`/${page.nav_path}`"
+          />
 
           <v-card-actions>
             <v-btn :href="`/${page.id}`" color="primary" icon
