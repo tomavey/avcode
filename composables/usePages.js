@@ -3,8 +3,9 @@ export const usePages = () => {
 
   const navPages = ref([]);
 
+  const pages = ref([]);
+
   const fetchNavPages = async () => {
-    console.log("Fetching pages");
     const { data, error } = await supabase
       .from("pages")
       .select("*")
@@ -24,9 +25,21 @@ export const usePages = () => {
     }));
   };
 
+  const fetchPages = async () => {
+    const { data, error } = await supabase.from("pages").select("*");
+    if (error) {
+      console.error(error);
+    } else {
+      pages.value = data;
+    }
+  };
+
   fetchNavPages();
+  fetchPages();
 
   return {
     navPages,
+    fetchPages,
+    pages,
   };
 };

@@ -13,45 +13,59 @@
             @update-content="update_content"
             v-model="newPage.content"
           />
-          <v-btn block @click="addPage" color="primary">Add Page</v-btn>
           <div v-if="makeNav">
             <v-alert class="text-center my-5" type="success">
               These fields make this page show up in the navigation drawer as a
               menu item.
             </v-alert>
-            <v-text-field
-              v-model="newPage.nav_name"
-              label="Nav Name"
-            ></v-text-field>
-            <v-text-field
-              v-model="newPage.nav_path"
-              label="Nav Path"
-            ></v-text-field>
-            <v-text-field
-              v-model="newPage.nav_icon"
-              label="Nav Icon"
-            ></v-text-field>
-            <v-text-field
-              v-model="newPage.nav_order"
-              label="Nav Order"
-              type="number"
-            ></v-text-field>
-            <v-text-field
-              v-model="newPage.nav_rights"
-              label="Nav Rights"
-            ></v-text-field>
+            <div class="grid">
+              <v-text-field
+                v-model="newPage.nav_name"
+                label="Name"
+                class="input"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_path"
+                label="Path"
+                class="input"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_icon"
+                label="Icon"
+                class="input"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_order"
+                label="Order"
+                type="number"
+                class="input"
+              ></v-text-field>
+              <v-text-field
+                v-model="newPage.nav_rights"
+                label="Rights"
+                class="input"
+              ></v-text-field>
+            </div>
           </div>
-          <v-btn
-            icon
-            elevation="0"
-            style="float: right"
-            @click="makeNav = !makeNav"
-            ><v-icon>mdi-menu-down-outline </v-icon>
-            <v-tooltip activator="parent" location="start"
-              >Toggle fields that turn this page into a nav drawer
-              item</v-tooltip
-            ></v-btn
-          >
+          <v-row class="mt-3">
+            <v-col cols="11">
+              <v-btn block @click="addPage" color="primary">Add Page</v-btn>
+            </v-col>
+            <v-col>
+              <v-btn
+                density="compact"
+                icon
+                elevation="0"
+                style="float: right"
+                @click="makeNav = !makeNav"
+                ><v-icon>mdi-menu-down-outline </v-icon>
+                <v-tooltip activator="parent" location="start"
+                  >Toggle fields that turn this page into a nav drawer
+                  item</v-tooltip
+                ></v-btn
+              >
+            </v-col>
+          </v-row>
         </v-form>
       </v-card-text>
     </v-card>
@@ -59,31 +73,54 @@
 </template>
 
 <script setup>
+const supabase = useSupabaseClient();
+
+const emit = defineEmits(["closeDialog", "fetchPages"]);
+
+const closeDialog = () => {
+  emit("closeDialog");
+};
+
+const fetchPages = () => {
+  emit("fetchPages");
+};
+
+const props = defineProps({
+  newPage: Object,
+});
+
+const newPage = ref(props.newPage);
+
 const pageTitle = ref("pages");
 
 const makeNav = ref(false);
 
-const newPage = ref({
-  title: "",
-  content: "",
-});
 const addPage = async () => {
   try {
-    if (newPage.value.id) {
-      const { data, error } = await supabase
-        .from("pages")
-        .update({ title: newPage.value.title, content: newPage.value.content })
-        .eq("id", newPage.value.id);
-      if (error) throw error;
+    const { id, ...pageData } = newPage.value;
+    let response;
+
+    if (id) {
+      response = await supabase.from("pages").update(pageData).eq("id", id);
     } else {
-      const { data, error } = await supabase
-        .from("pages")
-        .insert([newPage.value]);
-      if (error) throw error;
+      response = await supabase.from("pages").insert([pageData]);
     }
-    newPage.value = { title: "", content: "" };
+
+    const { data, error } = response;
+
+    if (error) throw error;
+
+    newPage.value = {
+      title: "",
+      content: "",
+      nav_name: "",
+      nav_path: "",
+      nav_icon: "",
+      nav_order: "",
+      nav_rights: "",
+    };
     fetchPages();
-    dialog.value = false;
+    closeDialog();
   } catch (error) {
     console.error(error);
   }
@@ -92,3 +129,11 @@ const update_content = (content) => {
   newPage.value.content = content;
 };
 </script>
+
+<style scoped>
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+</style>

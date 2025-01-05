@@ -1,6 +1,14 @@
 <template>
   <v-container class="my-10">
-    <v-btn @click="dialog = true" color="primary" icon class="mb-3">
+    <v-btn
+      @click="
+        dialog = true;
+        newPage = {};
+      "
+      color="primary"
+      icon
+      class="mb-3"
+    >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
     <v-row class="mb-3">
@@ -43,7 +51,15 @@
       </v-col>
     </v-row>
     <v-dialog v-model="dialog" max-width="800px">
-      <av-page-form />
+      <v-card>
+        <v-card-text style="max-height: 600px; overflow-y: auto">
+          <av-page-form
+            :newPage="newPage"
+            @closeDialog="closeDialog"
+            @fetchPages="fetchPages"
+          />
+        </v-card-text>
+      </v-card>
     </v-dialog>
   </v-container>
 </template>
@@ -109,9 +125,10 @@ const fetchPages = async () => {
 };
 
 const editPage = (page) => {
-  console.log("Edit page", page);
-  dialog.value = true;
+  // console.log("Edit page", page);
   newPage.value = { ...page };
+  // console.log("New page", newPage.value);
+  dialog.value = true;
 };
 
 const deletePage = async (id) => {
@@ -127,6 +144,10 @@ const deletePage = async (id) => {
 
 const update_content = (content) => {
   newPage.value.content = content;
+};
+
+const closeDialog = () => {
+  dialog.value = false;
 };
 
 onMounted(() => {
