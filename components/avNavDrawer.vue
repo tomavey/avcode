@@ -13,6 +13,7 @@
         <v-list-item-title>{{ item.name }}</v-list-item-title>
       </v-list-item>
     </v-list>
+    <v-btn @click="fetchNavPages" text>Refresh</v-btn>
   </v-navigation-drawer>
   <v-dialog
     v-model="showLoginDialog"
@@ -25,6 +26,7 @@
 
 <script setup>
 const { filteredDrawerItems, drawer, navPages, combinedDrawerItems } = useNav();
+const { fetchNavPages } = usePages();
 const { logout } = useAuth();
 const supabase = useSupabaseClient();
 
@@ -50,4 +52,6 @@ const closeLoginDialog = () => {
 const openLoginDialog = () => {
   showLoginDialog.value = true;
 };
+
+fetchNavPages();
 </script>

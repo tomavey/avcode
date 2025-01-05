@@ -35,7 +35,7 @@
                 class="input"
               ></v-text-field>
               <v-text-field
-                v-model="newPage.nav_order"
+                v-model="newPage.nav_sort_order"
                 label="Order"
                 type="number"
                 class="input"
@@ -57,8 +57,11 @@
                 icon
                 elevation="0"
                 style="float: right"
-                @click="makeNav = !makeNav"
-                ><v-icon>mdi-menu-down-outline </v-icon>
+                @click="handleMakeNav()"
+              >
+                <v-icon>{{
+                  !makeNav ? "mdi-menu-down-outline" : "mdi-menu-up-outline"
+                }}</v-icon>
                 <v-tooltip activator="parent" location="start"
                   >Toggle fields that turn this page into a nav drawer
                   item</v-tooltip
@@ -95,6 +98,10 @@ const pageTitle = ref("pages");
 
 const makeNav = ref(false);
 
+const handleMakeNav = () => {
+  makeNav.value = !makeNav.value;
+};
+
 const addPage = async () => {
   try {
     const { id, ...pageData } = newPage.value;
@@ -128,6 +135,10 @@ const addPage = async () => {
 const update_content = (content) => {
   newPage.value.content = content;
 };
+
+watchEffect(() => {
+  newPage.value.nav_name ? (makeNav.value = true) : (makeNav.value = false);
+});
 </script>
 
 <style scoped>

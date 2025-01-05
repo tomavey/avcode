@@ -1,9 +1,9 @@
+const navPages = ref([]);
+
+const pages = ref([]);
+
 export const usePages = () => {
   const supabase = useSupabaseClient();
-
-  const navPages = ref([]);
-
-  const pages = ref([]);
 
   const fetchNavPages = async () => {
     const { data, error } = await supabase
@@ -34,12 +34,15 @@ export const usePages = () => {
     }
   };
 
-  fetchNavPages();
-  fetchPages();
+  watchEffect(() => {
+    fetchNavPages();
+    fetchPages();
+  });
 
   return {
     navPages,
     fetchPages,
     pages,
+    fetchNavPages,
   };
 };
