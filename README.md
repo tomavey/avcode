@@ -1,23 +1,45 @@
-AVCODE Demo Application
-This is a Vue.js application that includes various features such as user authentication, dynamic page rendering, and a rich text editor. The application is built using Vue 3, Vuetify, and Supabase.
+# My Vue Application
 
-Table of Contents
-Features
-Installation
-Usage
-Configuration
-Contributing
-License
-Features
-User authentication with Supabase
-Dynamic page rendering
-Rich text editor with Tiptap
-Responsive design with Vuetify
-Navigation drawer with dynamic items
-Settings management
-Installation
-To get started with this project, clone the repository and install the dependencies:
+This is a Vue.js application that boasts a rich set of features, including:
 
+* **User Authentication:** Secure user login and management powered by Supabase.
+* **Dynamic Page Rendering:** Content that adapts and updates based on user interaction or data.
+* **Rich Text Editor:** Create and edit text content with formatting options using Tiptap.
+* **Responsive Design:** A seamless user experience across various devices, achieved with Vuetify.
+* **Navigation Drawer:** Efficient navigation with dynamic items for a smooth user flow.
+* **Settings Management:** User-specific preferences and configurations.
+
+## Table of Contents
+
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Configuration](#configuration)
+    * [Supabase](#supabase)
+    * [Vuetify](#vuetify)
+* [Project Structure](#project-structure)
+* [Contributing](#contributing)
+* [License](#license)
+
+## Features
+
+This application offers a comprehensive development environment:
+
+* User authentication with Supabase for secure access control.
+* Dynamic page rendering for a fluid and interactive user experience.
+* Rich text editor with Tiptap to empower users with content creation and formatting.
+* Responsive design built with Vuetify, ensuring optimal viewing across all devices.
+* Navigation drawer with dynamic items for intuitive navigation.
+* Settings management to cater to individual user preferences.
+
+## Installation
+
+To set up this project locally, follow these steps:
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
 Usage
 To run the application locally, use the following command:
 
