@@ -44,19 +44,26 @@ To get started with this project, clone the repository and install the dependenc
 
    ```bash
    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-Usage
+
+## Usage
 To run the application locally, use the following command:
+
+* npm run serve
 
 This will start a development server at http://localhost:8080.
 
-Configuration
+##Configuration
+
 Supabase
 This application uses Supabase for backend services. You need to configure your Supabase project by providing the necessary environment variables. Create a .env file in the root directory and add the following:
 
-Vuetify
+* VUE_APP_SUPABASE_URL=your-supabase-url
+* VUE_APP_SUPABASE_ANON_KEY=your-supabase-anon-key
+
+## Vuetify
 Vuetify is used for the UI components. You can customize the theme and other settings in the vuetify.js configuration file.
 
-Project Structure
+## Project Structure
 Here's an overview of the project's structure:
 
 src/
