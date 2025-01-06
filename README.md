@@ -130,13 +130,14 @@ src/
 Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
-Fork the repository
-Create a new branch (git checkout -b feature-branch)
-Make your changes
-Commit your changes (git commit -m 'Add new feature')
-Push to the branch (git push origin feature-branch)
-Open a pull request
-License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+* Fork the repository
+* Create a new branch (git checkout -b feature-branch)
+* Make your changes
+* Commit your changes (git commit -m 'Add new feature')
+* Push to the branch (git push origin feature-branch)
+* Open a pull request
 
-Feel free to customize this README document according to your project's specific details and requirements.
+## License
+*This project is licensed under the MIT License. See the LICENSE file for more details.
+
+*Feel free to customize this README document according to your project's specific details and requirements.
