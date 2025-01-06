@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-// import TextAlign from "@tiptap/extension-text-align";
+import TextAlign from "@tiptap/extension-text-align";
 import Youtube from "@tiptap/extension-youtube";
 const emit = defineEmits(["update-content"]);
 const props = defineProps({
@@ -30,9 +30,9 @@ const editor = useEditor({
   content: props.modelValue,
   extensions: [
     TiptapStarterKit,
-    // TextAlign.configure({
-    //   types: ["heading", "paragraph"],
-    // }),
+    TextAlign.configure({
+      types: ["heading", "paragraph"],
+    }),
     Youtube.configure({
       controls: false,
       nocookie: true,
