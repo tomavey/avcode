@@ -1,4 +1,4 @@
-# My Vue Application
+# AVCODE Demo Application
 
 This is a Vue.js application that boasts a rich set of features, including:
 
@@ -119,6 +119,6 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 * Open a pull request
 
 ## License
-*This project is licensed under the MIT License. See the LICENSE file for more details.
+* This project is licensed under the MIT License. See the LICENSE file for more details.
 
-*Feel free to customize this README document according to your project's specific details and requirements.
+* Feel free to customize this README document according to your project's specific details and requirements.
