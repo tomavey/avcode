@@ -1,75 +1,66 @@
-# Nuxt Minimal Starter
+My Vue Application
+This is a Vue.js application that includes various features such as user authentication, dynamic page rendering, and a rich text editor. The application is built using Vue 3, Vuetify, and Supabase.
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Table of Contents
+Features
+Installation
+Usage
+Configuration
+Contributing
+License
+Features
+User authentication with Supabase
+Dynamic page rendering
+Rich text editor with Tiptap
+Responsive design with Vuetify
+Navigation drawer with dynamic items
+Settings management
+Installation
+To get started with this project, clone the repository and install the dependencies:
 
-## Setup
+Usage
+To run the application locally, use the following command:
 
-Make sure to install dependencies:
+This will start a development server at http://localhost:8080.
 
-```bash
-# npm
-npm install
+Configuration
+Supabase
+This application uses Supabase for backend services. You need to configure your Supabase project by providing the necessary environment variables. Create a .env file in the root directory and add the following:
 
-# pnpm
-pnpm install
+Vuetify
+Vuetify is used for the UI components. You can customize the theme and other settings in the vuetify.js configuration file.
 
-# yarn
-yarn install
+Project Structure
+Here's an overview of the project's structure:
 
-# bun
-bun install
-```
+src/
+├── assets/
+├── components/
+│   ├── BubbleMenu.vue
+│   ├── avTiptapEditor.vue
+│   └── ...
+├── composables/
+│   ├── useDrawerItems.js
+│   ├── usePages.js
+│   └── useSettings.js
+├── pages/
+│   ├── [id].vue
+│   ├── avPageForm.vue
+│   └── ...
+├── App.vue
+├── main.js
+└── router.js
 
-## Development Server
+Contributing
+Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
-Start the development server on `http://localhost:3000`:
+Fork the repository
+Create a new branch (git checkout -b feature-branch)
+Make your changes
+Commit your changes (git commit -m 'Add new feature')
+Push to the branch (git push origin feature-branch)
+Open a pull request
+License
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Feel free to customize this README document according to your project's specific details and requirements.
