@@ -34,7 +34,11 @@ This application offers a comprehensive development environment:
 
 ## Installation
 
-To set up this project locally, follow these steps:
+To get started with this project, clone the repository and install the dependencies:
+
+* git clone https://github.com/your-username/your-repo-name.git
+* cd your-repo-name
+* npm install
 
 1. **Clone the Repository:**
 
