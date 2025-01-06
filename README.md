@@ -66,6 +66,49 @@ Vuetify is used for the UI components. You can customize the theme and other set
 ## Project Structure
 Here's an overview of the project's structure:
 
+```
+src/
+├── assets/ 
+├── components/
+│   ├── BubbleMenu.vue
+│   ├── avTiptapEditor.vue
+│   └── ...
+├── composables/
+│   ├── useDrawerItems.js
+│   ├── usePages.js
+│   └── useSettings.js
+├── pages/
+│   ├── [id].vue
+│   ├── avPageForm.vue
+│   └── ...
+├── App.vue
+├── main.js
+└── router.js
+```
+
+This markup represents a directory structure using a simple list format. 
+
+* **`src/`:** The root directory of the project.
+* **`assets/`:** A directory for storing static assets like images, fonts, etc.
+* **`components/`:** A directory containing reusable Vue.js components, such as:
+    * `BubbleMenu.vue`
+    * `avTiptapEditor.vue`
+    * (Other component files)
+* **`composables/`:** A directory for storing composables (functions that provide logic to be used across multiple components), such as:
+    * `useDrawerItems.js`
+    * `usePages.js`
+    * `useSettings.js`
+* **`pages/`:** A directory containing Vue.js components representing individual pages or views within the application, such as:
+    * `[id].vue` (likely a dynamic route component)
+    * `avPageForm.vue`
+    * (Other page components)
+* **`App.vue`:** The main root component of the Vue.js application.
+* **`main.js`:** The entry point of the application where the Vue instance is created.
+* **`router.js`:** The file where the application's routing configuration is defined.
+
+This structure is a common and recommended way to organize a Vue.js project, promoting code reusability, maintainability, and better separation of concerns.
+
+
 src/
 ├── assets/
 ├── components/
