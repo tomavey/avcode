@@ -50,23 +50,6 @@ src/
 ├── App.vue
 ├── main.js
 └── router.js
-src/
-├── assets/
-├── components/
-│   ├── BubbleMenu.vue
-│   ├── avTiptapEditor.vue
-│   └── ...
-├── composables/
-│   ├── useDrawerItems.js
-│   ├── usePages.js
-│   └── useSettings.js
-├── pages/
-│   ├── [id].vue
-│   ├── avPageForm.vue
-│   └── ...
-├── App.vue
-├── main.js
-└── router.js
 
 Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
