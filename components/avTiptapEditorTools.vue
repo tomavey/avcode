@@ -23,7 +23,7 @@
     elevation="0"
     icon="mdi-format-strikethrough"
   />
-  <v-btn
+  <!-- <v-btn
     @click="editor.chain().focus().setTextAlign('left').run()"
     :class="{ 'is-active': editor.isActive({ textAlign: 'left' }) }"
     icon="mdi-format-align-left"
@@ -43,7 +43,7 @@
     icon="mdi-format-align-right"
     elevation="0"
     density="compact"
-  />
+  /> -->
   <v-btn
     @click="editor.chain().focus().setParagraph().run()"
     density="compact"

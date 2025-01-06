@@ -25,6 +25,8 @@
 
 <script setup>
 const { filteredDrawerItems, drawer, navPages, combinedDrawerItems } = useNav();
+const { fetchNavPages } = usePages();
+
 const { logout } = useAuth();
 const supabase = useSupabaseClient();
 
