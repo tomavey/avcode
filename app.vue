@@ -9,7 +9,7 @@ const { settingsObj, fetchSettings } = useSettings();
 onMounted(() => {
   fetchSettings();
   console.log(
-    "%c====> DEPLOYED ON 01-06-25 7:26 AM TDA <====",
+    "%c====> DEPLOYED ON 01-06-25 7:31 AM TDA <====",
     "color: white; background: green;"
   );
 });
