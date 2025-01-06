@@ -108,26 +108,7 @@ This markup represents a directory structure using a simple list format.
 
 This structure is a common and recommended way to organize a Vue.js project, promoting code reusability, maintainability, and better separation of concerns.
 
-
-src/
-├── assets/
-├── components/
-│   ├── BubbleMenu.vue
-│   ├── avTiptapEditor.vue
-│   └── ...
-├── composables/
-│   ├── useDrawerItems.js
-│   ├── usePages.js
-│   └── useSettings.js
-├── pages/
-│   ├── [id].vue
-│   ├── avPageForm.vue
-│   └── ...
-├── App.vue
-├── main.js
-└── router.js
-
-Contributing
+## Contributing
 Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
 * Fork the repository
