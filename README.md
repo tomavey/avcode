@@ -1,4 +1,4 @@
-My Vue Application
+AVCODE Demo Application
 This is a Vue.js application that includes various features such as user authentication, dynamic page rendering, and a rich text editor. The application is built using Vue 3, Vuetify, and Supabase.
 
 Table of Contents
@@ -33,6 +33,23 @@ Vuetify is used for the UI components. You can customize the theme and other set
 Project Structure
 Here's an overview of the project's structure:
 
+src/
+├── assets/
+├── components/
+│   ├── BubbleMenu.vue
+│   ├── avTiptapEditor.vue
+│   └── ...
+├── composables/
+│   ├── useDrawerItems.js
+│   ├── usePages.js
+│   └── useSettings.js
+├── pages/
+│   ├── [id].vue
+│   ├── avPageForm.vue
+│   └── ...
+├── App.vue
+├── main.js
+└── router.js
 src/
 ├── assets/
 ├── components/
