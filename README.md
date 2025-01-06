@@ -52,7 +52,7 @@ To run the application locally, use the following command:
 
 This will start a development server at http://localhost:8080.
 
-##Configuration
+## Configuration
 
 Supabase
 This application uses Supabase for backend services. You need to configure your Supabase project by providing the necessary environment variables. Create a .env file in the root directory and add the following:
