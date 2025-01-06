@@ -1,75 +1,124 @@
-# Nuxt Minimal Starter
+# AVCODE Demo Application
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is a Vue.js application that boasts a rich set of features, including:
 
-## Setup
+* **User Authentication:** Secure user login and management powered by Supabase.
+* **Dynamic Page Rendering:** Content that adapts and updates based on user interaction or data.
+* **Rich Text Editor:** Create and edit text content with formatting options using Tiptap.
+* **Responsive Design:** A seamless user experience across various devices, achieved with Vuetify.
+* **Navigation Drawer:** Efficient navigation with dynamic items for a smooth user flow.
+* **Settings Management:** User-specific preferences and configurations.
 
-Make sure to install dependencies:
+## Table of Contents
 
-```bash
-# npm
-npm install
+* [Features](#features)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Configuration](#configuration)
+    * [Supabase](#supabase)
+    * [Vuetify](#vuetify)
+* [Project Structure](#project-structure)
+* [Contributing](#contributing)
+* [License](#license)
 
-# pnpm
-pnpm install
+## Features
 
-# yarn
-yarn install
+This application offers a comprehensive development environment:
 
-# bun
-bun install
+* User authentication with Supabase for secure access control.
+* Dynamic page rendering for a fluid and interactive user experience.
+* Rich text editor with Tiptap to empower users with content creation and formatting.
+* Responsive design built with Vuetify, ensuring optimal viewing across all devices.
+* Navigation drawer with dynamic items for intuitive navigation.
+* Settings management to cater to individual user preferences.
+
+## Installation
+
+To get started with this project, clone the repository and install the dependencies:
+
+* git clone https://github.com/your-username/your-repo-name.git
+* cd your-repo-name
+* npm install
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+
+## Usage
+To run the application locally, use the following command:
+
+* npm run serve
+
+This will start a development server at http://localhost:8080.
+
+## Configuration
+
+Supabase
+This application uses Supabase for backend services. You need to configure your Supabase project by providing the necessary environment variables. Create a .env file in the root directory and add the following:
+
+* VUE_APP_SUPABASE_URL=your-supabase-url
+* VUE_APP_SUPABASE_ANON_KEY=your-supabase-anon-key
+
+## Vuetify
+Vuetify is used for the UI components. You can customize the theme and other settings in the vuetify.js configuration file.
+
+## Project Structure
+Here's an overview of the project's structure:
+
+```
+src/
+├── assets/ 
+├── components/
+│   ├── BubbleMenu.vue
+│   ├── avTiptapEditor.vue
+│   └── ...
+├── composables/
+│   ├── useDrawerItems.js
+│   ├── usePages.js
+│   └── useSettings.js
+├── pages/
+│   ├── [id].vue
+│   ├── avPageForm.vue
+│   └── ...
+├── App.vue
+├── main.js
+└── router.js
 ```
 
-## Development Server
+This markup represents a directory structure using a simple list format. 
 
-Start the development server on `http://localhost:3000`:
+* **`src/`:** The root directory of the project.
+* **`assets/`:** A directory for storing static assets like images, fonts, etc.
+* **`components/`:** A directory containing reusable Vue.js components, such as:
+    * `BubbleMenu.vue`
+    * `avTiptapEditor.vue`
+    * (Other component files)
+* **`composables/`:** A directory for storing composables (functions that provide logic to be used across multiple components), such as:
+    * `useDrawerItems.js`
+    * `usePages.js`
+    * `useSettings.js`
+* **`pages/`:** A directory containing Vue.js components representing individual pages or views within the application, such as:
+    * `[id].vue` (likely a dynamic route component)
+    * `avPageForm.vue`
+    * (Other page components)
+* **`App.vue`:** The main root component of the Vue.js application.
+* **`main.js`:** The entry point of the application where the Vue instance is created.
+* **`router.js`:** The file where the application's routing configuration is defined.
 
-```bash
-# npm
-npm run dev
+This structure is a common and recommended way to organize a Vue.js project, promoting code reusability, maintainability, and better separation of concerns.
 
-# pnpm
-pnpm dev
+## Contributing
+Contributions are welcome! If you have any ideas, suggestions, or bug reports, please open an issue or submit a pull request.
 
-# yarn
-yarn dev
+* Fork the repository
+* Create a new branch (git checkout -b feature-branch)
+* Make your changes
+* Commit your changes (git commit -m 'Add new feature')
+* Push to the branch (git push origin feature-branch)
+* Open a pull request
 
-# bun
-bun run dev
-```
+## License
+* This project is licensed under the MIT License. See the LICENSE file for more details.
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+* Feel free to customize this README document according to your project's specific details and requirements.
