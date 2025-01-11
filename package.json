@@ -12,6 +12,7 @@
   "dependencies": {
     "@tiptap/extension-text-align": "^2.11.0",
     "@tiptap/extension-youtube": "^2.11.0",
+    "@vueuse/core": "^12.3.0",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"

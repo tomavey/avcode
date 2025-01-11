@@ -35,6 +35,13 @@ const drawerItems = [
     sortOrder: 5,
   },
   {
+    name: "Tasks",
+    path: "/tasks",
+    rights: "admin",
+    icon: "mdi-calendar-check",
+    sortOrder: 9,
+  },
+  {
     name: "Login",
     action: "login",
     rights: "admin",

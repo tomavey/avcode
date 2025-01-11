@@ -10,8 +10,16 @@ export const useFormating = () => {
     return format.replace(/MM|dd|yy|yyyy/gi, (matched) => map[matched]);
   };
 
-  return {
-    formatDateString
-  }
+  const formatDate = (dateString, dateStyle = "medium") => {
+    const date = new Date(dateString);
+    // Then specify how you want your dates to be formatted
+    return new Intl.DateTimeFormat("default", { dateStyle: dateStyle }).format(
+      date
+    );
+  };
 
-}
+  return {
+    formatDateString,
+    formatDate,
+  };
+};
