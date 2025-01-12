@@ -164,3 +164,64 @@ create table
   ) tablespace pg_default;
 
 ```
+
+```sql
+create table
+  public.settings (
+    id serial not null,
+    key character varying(255) not null,
+    value text not null,
+    type character varying(50) not null,
+    created_at timestamp with time zone null default current_timestamp,
+    updated_at timestamp with time zone null default current_timestamp,
+    constraint settings_pkey primary key (id),
+    constraint settings_key_key unique (key)
+  ) tablespace pg_default;
+
+```
+
+create table
+public.tasks (
+id uuid not null default extensions.uuid_generate_v4 (),
+title text not null,
+description text null,
+due_date timestamp with time zone null,
+status character varying(20) null default 'TODO'::character varying,
+created_at timestamp with time zone null default now(),
+updated_at timestamp with time zone null default now(),
+constraint tasks_pkey primary key (id)
+) tablespace pg_default;
+
+````
+```sql
+  create view
+  public.tasks_with_users as
+select
+  t.title,
+  t.description,
+  t.due_date,
+  p.first_name,
+  p.last_name
+from
+  tasks t
+  left join user_tasks ut on t.id = ut.task_id
+  left join profiles p on ut.user_id = p.id
+group by
+  t.id,
+  t.title,
+  t.description,
+  t.due_date,
+  p.first_name,
+  p.last_name;
+````
+
+```sql
+create table
+  public.user_tasks (
+    user_id uuid not null,
+    task_id uuid not null,
+    constraint user_tasks_pkey primary key (user_id, task_id),
+    constraint user_tasks_task_id_fkey foreign key (task_id) references tasks (id),
+    constraint user_tasks_user_id_fkey foreign key (user_id) references profiles (id)
+  ) tablespace pg_default;
+```
