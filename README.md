@@ -180,6 +180,7 @@ create table
 
 ```
 
+```sql
 create table
 public.tasks (
 id uuid not null default extensions.uuid_generate_v4 (),
@@ -192,7 +193,8 @@ updated_at timestamp with time zone null default now(),
 constraint tasks_pkey primary key (id)
 ) tablespace pg_default;
 
-````
+```
+
 ```sql
   create view
   public.tasks_with_users as
@@ -213,7 +215,7 @@ group by
   t.due_date,
   p.first_name,
   p.last_name;
-````
+```
 
 ```sql
 create table
