@@ -129,7 +129,7 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 
 - Feel free to customize this README document according to your project's specific details and requirements.
 
-## SQL for tables
+## SQL for tables and view
 
 ```sql
 CREATE TABLE public.profiles (
