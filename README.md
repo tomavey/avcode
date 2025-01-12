@@ -182,16 +182,16 @@ create table
 
 ```sql
 create table
-public.tasks (
-id uuid not null default extensions.uuid_generate_v4 (),
-title text not null,
-description text null,
-due_date timestamp with time zone null,
-status character varying(20) null default 'TODO'::character varying,
-created_at timestamp with time zone null default now(),
-updated_at timestamp with time zone null default now(),
-constraint tasks_pkey primary key (id)
-) tablespace pg_default;
+  public.tasks (
+    id uuid not null default extensions.uuid_generate_v4 (),
+    title text not null,
+    description text null,
+    due_date timestamp with time zone null,
+    status character varying(20) null default 'TODO'::character varying,
+    created_at timestamp with time zone null default now(),
+    updated_at timestamp with time zone null default now(),
+    constraint tasks_pkey primary key (id)
+  ) tablespace pg_default;
 
 ```
 
