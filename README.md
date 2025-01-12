@@ -128,3 +128,19 @@ Contributions are welcome! If you have any ideas, suggestions, or bug reports, p
 - This project is licensed under the MIT License. See the LICENSE file for more details.
 
 - Feel free to customize this README document according to your project's specific details and requirements.
+
+## SQL for tables
+
+```sql
+CREATE TABLE public.profiles (
+  id UUID NOT NULL,
+  first_name TEXT NULL,
+  last_name TEXT NULL,
+  phone TEXT NULL,
+  authorized_to TEXT[] NULL,
+  email TEXT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE NULL,
+  CONSTRAINT profiles_pkey PRIMARY KEY (id),
+  CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users (id) ON DELETE CASCADE
+) TABLESPACE pg_default;
+```
