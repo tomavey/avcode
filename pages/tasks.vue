@@ -34,8 +34,23 @@
         <v-card>
           <v-card-title>{{ task.title.toString() }}</v-card-title>
           <v-card-text v-html="task.description" />
-          <v-card-text v-if="task.status" v-html="task.status" />
-          <v-card-text v-html="formatDate(task.due_date)" style="float: left" />
+          <v-radio-group
+            v-model="task.status"
+            inline
+            :label="`Status:
+            ${getSortOptionText(task.status)}`"
+          >
+            <v-radio
+              v-for="option in statusOptions"
+              :key="option.value"
+              :label="option.text"
+              :value="option.value"
+              class="mr-3"
+              density="compact"
+              @change="updateTask(task)"
+            ></v-radio>
+          </v-radio-group>
+          <v-card-text v-html="`Due: ${formatDate(task.due_date)}`" />
           <v-card-actions style="float: right">
             <!-- <v-btn :href="`/${page.id}`" color="primary" icon
               ><v-icon>mdi-eye</v-icon></v-btn
@@ -90,6 +105,17 @@ const sortOptions = [
   { text: "Created", value: "created_at" },
 ];
 
+const statusOptions = [
+  { text: "In Process", value: "in_process" },
+  { text: "For Later", value: "for_later" },
+  { text: "Completed", value: "completed" },
+];
+
+const getSortOptionText = (value) => {
+  const option = statusOptions.find((option) => option.value === value);
+  return option ? option.text : "";
+};
+
 const searchQuery = ref("");
 
 const filteredTasks = computed(() => {
@@ -117,6 +143,19 @@ const sortedTasks = computed(() => {
     return 0;
   });
 });
+
+const updateTask = async (task) => {
+  console.log("Update task", task);
+  const { data, error } = await supabase
+    .from("tasks")
+    .update({ status: task.status })
+    .eq("id", task.id);
+  if (error) {
+    console.error(error);
+  } else {
+    fetchTasks();
+  }
+};
 
 const fetchTasks = async () => {
   const { data, error } = await supabase.from("tasks").select("*");
