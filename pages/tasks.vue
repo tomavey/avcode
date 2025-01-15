@@ -34,8 +34,13 @@
         <v-card>
           <v-card-title>{{ task.title.toString() }}</v-card-title>
           <v-card-text v-html="task.description" />
-          <v-card-text v-if="task.status" v-html="task.status" />
-          <v-card-text v-html="formatDate(task.due_date)" style="float: left" />
+          <av-task-form-status-radio
+            :statusOptions="statusOptions"
+            :task="task"
+            @updateTaskStatus="updateTaskStatus(task)"
+            :updateTaskStatusNow="true"
+          />
+          <v-card-text v-html="`Due: ${formatDate(task.due_date)}`" />
           <v-card-actions style="float: right">
             <!-- <v-btn :href="`/${page.id}`" color="primary" icon
               ><v-icon>mdi-eye</v-icon></v-btn
@@ -68,6 +73,7 @@
 const supabase = useSupabaseClient();
 const pageTitle = ref("pages");
 const { formatDate } = useFormating();
+const { statusOptions, updateTaskStatus } = useTasks();
 
 const tasks = ref([]);
 
@@ -79,16 +85,21 @@ const newTask = ref({
   title: "",
   description: "",
   due_date: null,
-  status: "",
+  status: "todo",
 });
 
 const sortBy = ref("title");
 
 const sortOptions = [
   { text: "Title", value: "title" },
-  { text: "ID", value: "id" },
+  { text: "Status", value: "status" },
   { text: "Created", value: "created_at" },
 ];
+
+const getSortOptionText = (value) => {
+  const option = statusOptions.find((option) => option.value === value);
+  return option ? option.text : "";
+};
 
 const searchQuery = ref("");
 
@@ -100,15 +111,16 @@ const filteredTasks = computed(() => {
     const query = searchQuery.value.toLowerCase();
     return (
       task.title.toLowerCase().includes(query) ||
-      task.description.toLowerCase().includes(query)
+      task.description.toLowerCase().includes(query) ||
+      task.status.toLowerCase().includes(query)
     );
   });
 });
 
 const sortedTasks = computed(() => {
   return [...filteredTasks.value].sort((a, b) => {
-    if (sortBy.value === "id") {
-      return a.id - b.id;
+    if (sortBy.value === "status") {
+      return a.status.localeCompare(b.status);
     } else if (sortBy.value === "title") {
       return a.title.localeCompare(b.title);
     } else if (sortBy.value === "created_at") {

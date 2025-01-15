@@ -21,6 +21,12 @@
             readonly
             @focus="showDatePicker = true"
           ></v-text-field>
+          <av-task-form-status-radio
+            :statusOptions="statusOptions"
+            :task="newTask"
+            @updateTaskStatus="updateTaskStatus(task)"
+            :updateTaskStatusNow="false"
+          />
           <v-date-picker
             v-if="showDatePicker"
             v-model="newTask.due_date"
@@ -28,25 +34,8 @@
           ></v-date-picker>
 
           <v-row class="mt-3">
-            <v-col cols="11">
+            <v-col cols="12">
               <v-btn block @click="addTask" color="primary">Add Task</v-btn>
-            </v-col>
-            <v-col>
-              <v-btn
-                density="compact"
-                icon
-                elevation="0"
-                style="float: right"
-                @click="handleMakeNav()"
-              >
-                <v-icon>{{
-                  !makeNav ? "mdi-menu-down-outline" : "mdi-menu-up-outline"
-                }}</v-icon>
-                <v-tooltip activator="parent" location="start"
-                  >Toggle fields that turn this page into a nav drawer
-                  item</v-tooltip
-                ></v-btn
-              >
             </v-col>
           </v-row>
         </v-form>
@@ -57,6 +46,7 @@
 
 <script setup>
 const supabase = useSupabaseClient();
+const { statusOptions, updateTaskStatus } = useTasks();
 
 const emit = defineEmits(["closeDialog", "fetchTasks"]);
 
