@@ -1,6 +1,7 @@
 <template>
   <v-container class="my-10">
     <v-btn
+      v-if="isLoggedIn"
       @click="
         dialog = true;
         newPage = {};
@@ -34,7 +35,10 @@
         <v-card>
           <v-card-title>{{ task.title.toString() }}</v-card-title>
           <v-card-text v-html="task.description" />
+          <v-card-text v-if="!isLoggedIn" v-html="task.status" />
+
           <av-task-form-status-radio
+            v-if="isLoggedIn"
             :statusOptions="statusOptions"
             :task="task"
             @updateTaskStatus="updateTaskStatus(task)"
@@ -45,10 +49,18 @@
             <!-- <v-btn :href="`/${page.id}`" color="primary" icon
               ><v-icon>mdi-eye</v-icon></v-btn
             > -->
-            <v-btn @click="editTask(task)" color="secondary" icon
+            <v-btn
+              v-if="isLoggedIn"
+              @click="editTask(task)"
+              color="secondary"
+              icon
               ><v-icon>mdi-pencil</v-icon></v-btn
             >
-            <v-btn @click="deleteTask(task.id)" color="error" icon
+            <v-btn
+              v-if="isLoggedIn"
+              @click="deleteTask(task.id)"
+              color="error"
+              icon
               ><v-icon>mdi-trash-can</v-icon></v-btn
             >
           </v-card-actions>
@@ -74,6 +86,7 @@ const supabase = useSupabaseClient();
 const pageTitle = ref("pages");
 const { formatDate } = useFormating();
 const { statusOptions, updateTaskStatus } = useTasks();
+const { isLoggedIn } = useAuth();
 
 const tasks = ref([]);
 

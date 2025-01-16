@@ -8,6 +8,7 @@
       color="primary"
       icon
       class="mb-3"
+      v-if="isLoggedIn"
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
@@ -44,10 +45,18 @@
             <v-btn :href="`/${page.id}`" color="primary" icon
               ><v-icon>mdi-eye</v-icon></v-btn
             >
-            <v-btn @click="editPage(page)" color="secondary" icon
+            <v-btn
+              v-if="isLoggedIn"
+              @click="editPage(page)"
+              color="secondary"
+              icon
               ><v-icon>mdi-pencil</v-icon></v-btn
             >
-            <v-btn @click="deletePage(page.id)" color="error" icon
+            <v-btn
+              v-if="isLoggedIn"
+              @click="deletePage(page.id)"
+              color="error"
+              icon
               ><v-icon>mdi-trash-can</v-icon></v-btn
             >
           </v-card-actions>
@@ -70,6 +79,7 @@
 
 <script setup>
 const supabase = useSupabaseClient();
+const { isLoggedIn } = useAuth();
 const pageTitle = ref("pages");
 
 const pages = ref([]);

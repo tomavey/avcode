@@ -9,7 +9,7 @@
         <v-img src="@/assets/avcode3.png" :width="175" class="cursor-pointer" />
       </div>
       <v-spacer />
-      <p v-if="user?.email">
+      <p v-if="user?.email" class="mr-4">
         {{ user.email }}
       </p>
     </v-toolbar>

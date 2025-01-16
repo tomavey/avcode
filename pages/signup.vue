@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container class="mt-15">
     <v-card class="logincard mx-auto">
       <h1>Signup a new User</h1>
       <v-alert v-if="errorMessage" type="error" density="compact">
@@ -44,7 +44,7 @@
         <v-btn :disabled="!valid" @click="handleSubmit">Submit</v-btn>
       </v-form>
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 <script setup>

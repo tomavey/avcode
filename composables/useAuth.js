@@ -24,6 +24,7 @@ export const useAuth = () => {
   };
 
   const signUpNewUser = async (newUser) => {
+    newUser.emailRedirectTo = `${window.location.origin}/authcallback`;
     try {
       const response = await supabase.auth.signUp(newUser);
       console.log("Sign up response:", response);
@@ -36,7 +37,12 @@ export const useAuth = () => {
         if (error.message.includes("User already registered")) {
           errorMessage.value =
             "This email is already registered. Please use a different email.";
+          showSnackbar(
+            "This email is already registered. Please use a different email."
+          );
         }
+      } else {
+        showSnackbar("Please check your email to verify your account.");
       }
 
       newUser.id = user.id;
@@ -62,6 +68,7 @@ export const useAuth = () => {
     if (error) {
       console.log("Error", error);
       errorMessage.value = error.message;
+      showSnackbar(`${errorMessage.value}.`);
     } else {
       showSnackbar(`${email} is signed in.`);
       setTimeout(() => {
