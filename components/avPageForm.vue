@@ -8,10 +8,14 @@
             v-model="newPage.title"
             label="Title"
             required
+            tabindex="1"
+            class="title_input"
           ></v-text-field>
           <av-Tiptap-editor
             @update-content="update_content"
             v-model="newPage.content"
+            tabindex="2"
+            class="content_input"
           />
           <div v-if="makeNav">
             <v-alert class="text-center my-5" type="success">
@@ -135,10 +139,16 @@ const addPage = async () => {
 const update_content = (content) => {
   newPage.value.content = content;
 };
-
+pageTitle.value = newPage.value.title ? "Edit" : "Add";
 watchEffect(() => {
   newPage.value.nav_name ? (makeNav.value = true) : (makeNav.value = false);
 });
+
+// onMounted(() => {
+//   nextTick(() => {
+//     document.querySelector(".content_input input").focus();
+//   });
+// });
 </script>
 
 <style scoped>
