@@ -5,6 +5,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-account-group",
     sortOrder: 2,
+    includeIndexPage: true,
   },
   {
     name: "About",
@@ -12,6 +13,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-information-outline",
     sortOrder: 1,
+    includeIndexPage: true,
   },
   {
     name: "Account",
@@ -19,6 +21,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-account-check",
     sortOrder: 4,
+    includeIndexPage: true,
   },
   {
     name: "Settings",
@@ -26,6 +29,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-cog",
     sortOrder: 4,
+    includeIndexPage: true,
   },
   {
     name: "Pages",
@@ -33,6 +37,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-information",
     sortOrder: 5,
+    includeIndexPage: true,
   },
   {
     name: "Tasks",
@@ -40,6 +45,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-calendar-check",
     sortOrder: 9,
+    includeIndexPage: true,
   },
   {
     name: "Login",
@@ -47,6 +53,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-login",
     sortOrder: 5,
+    includeIndexPage: false,
   },
   {
     name: "Logout",
@@ -54,6 +61,7 @@ const drawerItems = [
     rights: "admin",
     icon: "mdi-logout",
     sortOrder: 6,
+    includeIndexPage: false,
   },
 ];
 
