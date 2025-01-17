@@ -1,31 +1,33 @@
 <template>
-  <av-snackbar />
-
-  <v-container>
-    {{ pageTitle }}
-    {{ drawer }}
+  <v-container class="mt-15">
+    <v-row>
+      <v-col
+        v-for="(item, index) in indexPageItems"
+        :key="index"
+        cols="12"
+        sm="4"
+      >
+        <v-card @click="navigateTo(item.path)" class="rounded-border">
+          <v-card-title>{{ item.name }}</v-card-title>
+          <v-card-text>{{ item.path }}</v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup>
-const pageTitle = ref("INDEX");
-const drawer = ref(true);
-const items = [
-  {
-    title: "Foo",
-    value: "foo",
-  },
-  {
-    title: "Bar",
-    value: "bar",
-  },
-  {
-    title: "Fizz",
-    value: "fizz",
-  },
-  {
-    title: "Buzz",
-    value: "buzz",
-  },
-];
+const { combinedDrawerItems } = useDrawerItems();
+
+const indexPageItems = combinedDrawerItems.value.filter(
+  (item) => item.includeIndexPage
+);
+
+const pageTitle = ref("Index Page");
 </script>
+
+<style scoped>
+.rounded-border {
+  border-radius: 10px;
+}
+</style>
