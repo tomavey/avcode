@@ -7,9 +7,16 @@ export const useProfiles = () => {
 
   const users = ref([]);
 
-  async function createNewProfile({ id, email, first_name, last_name, phone }) {
+  const createNewProfile = async (newUser) => {
     try {
-      const updates = {
+      const {
+        id,
+        email,
+        options: {
+          data: { first_name, last_name, phone },
+        },
+      } = newUser;
+      const newProfile = {
         id,
         email,
         first_name,
@@ -19,18 +26,15 @@ export const useProfiles = () => {
         updated_at: new Date(),
       };
 
-      // console.log("update", updates)
-
-      const { error } = await supabase.from("profiles").upsert(updates, {
-        returning: "minimal", // Don't return the value after inserting
+      const { error } = await supabase.from("profiles").upsert(newProfile, {
+        returning: "minimal",
       });
 
       if (error) throw error;
     } catch (error) {
       console.error("Error creating new profile:", error.message);
-      alert("Failed to create new profile. Please try again.");
     }
-  }
+  };
 
   const updateProfile = async (obj) => {
     obj.updated_at = new Date().toISOString(); // Insert current timestamp

@@ -85,7 +85,18 @@ const rules = {
 const handleSubmit = async () => {
   if (valid.value) {
     // alert(`Signing up ${formData.value.email}`);
-    await signUpNewUser(formData.value);
+    const newUserObj = {
+      email: formData.value.email,
+      password: formData.value.password,
+      options: {
+        data: {
+          first_name: formData.value.first_name,
+          last_name: formData.value.last_name,
+          phone: formData.value.phone,
+        },
+      },
+    };
+    await signUpNewUser(newUserObj);
     if (!errorMessage.length) {
       router.push({ path: "/" });
     }

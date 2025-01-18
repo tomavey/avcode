@@ -56,6 +56,14 @@ const drawerItems = [
     includeIndexPage: false,
   },
   {
+    name: "Create New User",
+    path: "/signup",
+    rights: "admin",
+    icon: "mdi-login",
+    sortOrder: 5,
+    includeIndexPage: true,
+  },
+  {
     name: "Logout",
     action: "logout",
     rights: "admin",

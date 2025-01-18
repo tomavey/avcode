@@ -47,7 +47,8 @@ export const useAuth = () => {
 
       newUser.id = user.id;
 
-      console.log("User signed up:", newUser);
+      // console.log("User signed up:", newUser);
+
       createNewProfile(newUser);
     } catch (error) {
       console.error("Error signing up:", error.message);
