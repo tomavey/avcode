@@ -6,7 +6,6 @@ const loginSuccess = ref(false);
 export const useAuth = () => {
   const user = useSupabaseUser();
   const supabase = useSupabaseClient();
-  const { createNewProfile } = useProfiles();
   const { showSnackbar, snackbar } = useSnackbar();
 
   const errorMessage = ref("");
@@ -24,7 +23,7 @@ export const useAuth = () => {
   };
 
   const signUpNewUser = async (newUser) => {
-    newUser.emailRedirectTo = `${window.location.origin}/authcallback`;
+    newUser.options.emailRedirectTo = `${window.location.origin}/authcallback`;
     try {
       const response = await supabase.auth.signUp(newUser);
       console.log("Sign up response:", response);
@@ -48,8 +47,6 @@ export const useAuth = () => {
       newUser.id = user.id;
 
       // console.log("User signed up:", newUser);
-
-      createNewProfile(newUser);
     } catch (error) {
       console.error("Error signing up:", error.message);
     }

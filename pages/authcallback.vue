@@ -1,38 +1,29 @@
 <template>
-  <div>
-    <h1>Authentication Callback</h1>
-    <p>Processing authentication...</p>
-  </div>
+  <v-container class="mt-15">
+    <h1>New Signup is Authorized</h1>
+  </v-container>
 </template>
 
-<script>
-export default {
-  name: "AuthCallback",
-  mounted() {
-    this.handleAuthCallback();
-  },
-  methods: {
-    async handleAuthCallback() {
-      try {
-        // Simulate authentication processing
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        // Redirect to the home page or another page after authentication
-        this.$router.push({ name: "about" });
-      } catch (error) {
-        console.error("Error during authentication callback:", error);
-      }
-    },
-  },
-};
-</script>
+<script setup>
+const { createNewProfile } = useProfiles();
+const signupFormData = ref(null);
+const user = useSupabaseUser();
+const router = useRouter();
 
-<style scoped>
-h1 {
-  text-align: center;
-  margin-top: 20px;
-}
-p {
-  text-align: center;
-  margin-top: 10px;
-}
-</style>
+const newProfile = computed(() => {
+  let profile = signupFormData.value;
+  profile = {
+    ...profile,
+    id: user.value.id,
+  };
+  return profile;
+});
+
+onMounted(() => {
+  signupFormData.value = JSON.parse(localStorage.getItem("signupFormData"));
+  delete signupFormData.value.password;
+  delete signupFormData.value.confirmPassword;
+  createNewProfile(newProfile.value);
+  router.push("/");
+});
+</script>

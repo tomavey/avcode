@@ -41,7 +41,13 @@
           :rules="[rules.required]"
         ></v-text-field>
         <v-text-field v-model="formData.phone" label="Phone"></v-text-field>
-        <v-btn :disabled="!valid" @click="handleSubmit">Submit</v-btn>
+        <v-btn
+          block
+          color="indigo-darken-3"
+          :disabled="!valid"
+          @click="handleSubmit"
+          >Submit</v-btn
+        >
       </v-form>
     </v-card>
   </v-container>

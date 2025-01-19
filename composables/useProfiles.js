@@ -7,24 +7,15 @@ export const useProfiles = () => {
 
   const users = ref([]);
 
-  const createNewProfile = async (newUser) => {
+  const createNewProfile = async (newProfile) => {
     try {
-      const {
-        id,
-        email,
-        options: {
-          data: { first_name, last_name, phone },
-        },
-      } = newUser;
-      const newProfile = {
-        id,
-        email,
-        first_name,
-        last_name,
-        phone,
+      newProfile = {
+        ...newProfile,
         authorized_to: ["basic"],
         updated_at: new Date(),
       };
+
+      console.log("newProfile", newProfile);
 
       const { error } = await supabase.from("profiles").upsert(newProfile, {
         returning: "minimal",
