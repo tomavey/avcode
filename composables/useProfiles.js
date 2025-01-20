@@ -22,8 +22,11 @@ export const useProfiles = () => {
       });
 
       if (error) throw error;
+
+      return true;
     } catch (error) {
       console.error("Error creating new profile:", error.message);
+      return false;
     }
   };
 

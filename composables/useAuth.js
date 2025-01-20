@@ -45,6 +45,7 @@ export const useAuth = () => {
       }
 
       newUser.id = user.id;
+      return newUser;
 
       // console.log("User signed up:", newUser);
     } catch (error) {

@@ -1,29 +1,23 @@
 <template>
   <v-container class="mt-15">
-    <h1>New Signup is Authorized</h1>
+    <h1 class="text-center">New Signup is Authorized</h1>
   </v-container>
 </template>
 
 <script setup>
 const { createNewProfile } = useProfiles();
-const signupFormData = ref(null);
-const user = useSupabaseUser();
 const router = useRouter();
 
-const newProfile = computed(() => {
-  let profile = signupFormData.value;
-  profile = {
-    ...profile,
-    id: user.value.id,
-  };
-  return profile;
-});
+const newProfile = ref(null);
 
-onMounted(() => {
-  signupFormData.value = JSON.parse(localStorage.getItem("signupFormData"));
-  delete signupFormData.value.password;
-  delete signupFormData.value.confirmPassword;
-  createNewProfile(newProfile.value);
-  router.push("/");
+onMounted(async () => {
+  newProfile.value = await JSON.parse(localStorage.getItem("signupFormData"));
+  createNewProfile(newProfile.value)
+    ? console.log("Profile created")
+    : console.log("Profile not created");
+  setTimeout(() => {
+    localStorage.removeItem("signupFormData");
+    router.push("/");
+  }, 1000);
 });
 </script>

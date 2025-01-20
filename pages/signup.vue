@@ -102,11 +102,25 @@ const handleSubmit = async () => {
         },
       },
     };
-    await signUpNewUser(newUserObj);
+    const newUser = await signUpNewUser(newUserObj);
+    console.log("New User", newUser);
+    setLocalStorageProfile(newUser.id);
     if (!errorMessage.length) {
       router.push({ path: "/" });
     }
   }
+};
+
+const setLocalStorageProfile = (id) => {
+  const obj = {
+    email: formData.value.email,
+    first_name: formData.value.first_name,
+    last_name: formData.value.last_name,
+    phone: formData.value.phone,
+    id: id,
+  };
+  localStorage.setItem("signupFormData", JSON.stringify(obj));
+  console.log("Local Storage set");
 };
 </script>
 
