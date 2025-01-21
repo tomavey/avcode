@@ -9,6 +9,7 @@
         <v-img src="@/assets/avcode3.png" :width="175" class="cursor-pointer" />
       </div>
       <v-spacer />
+      <av-translate />
       <p v-if="user?.email" class="mr-4">
         {{ user.email }}
       </p>
@@ -21,3 +22,17 @@ const { toggleDrawer } = useNav();
 const user = useSupabaseUser();
 const router = useRouter();
 </script>
+
+<style>
+body {
+  top: 0 !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
+.skiptranslate.goog-te-gadget {
+  display: block !important;
+}
+</style>
