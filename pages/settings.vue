@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-15">
+  <v-container>
     <v-card>
       <v-card-title>Settings</v-card-title>
       <v-card-text>

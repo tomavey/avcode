@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-15">
+  <v-container>
     <h1 class="text-center">New Signup is Authorized</h1>
   </v-container>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-15">
+  <v-container>
     <v-card class="logincard mx-auto">
       <h1>Signup a new User</h1>
       <v-alert v-if="errorMessage" type="error" density="compact">
