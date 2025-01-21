@@ -31,6 +31,7 @@ This application offers a comprehensive development environment:
 - Responsive design built with Vuetify, ensuring optimal viewing across all devices.
 - Navigation drawer with dynamic items for intuitive navigation.
 - Settings management to cater to individual user preferences.
+- Language translation.
 
 ## Installation
 
