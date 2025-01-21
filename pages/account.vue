@@ -30,7 +30,7 @@ const possibleRightsArr = computed(() => {
   if (settingsObj.value.possibleRights) {
     let str = settingsObj.value.possibleRights;
     return stringToArray(str);
-  } class="mt-15"
+  }
   return [];
 });
 
