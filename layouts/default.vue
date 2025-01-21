@@ -4,7 +4,7 @@
     <av-nav-drawer />
 
     <main>
-      <v-container>
+      <v-container class="mt-12">
         <NuxtPage />
       </v-container>
     </main>

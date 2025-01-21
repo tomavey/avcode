@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-10">
+  <v-container>
     <div v-if="page.show_card">
       <v-card v-if="page.title">
         <v-card-title>{{ page.title }}</v-card-title>
