@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^1.4.3",
+    "@samk-dev/nuxt-vcalendar": "^1.0.4",
     "nuxt-tiptap-editor": "^2.1.4",
     "vuetify-nuxt-module": "^0.18.3"
   }
