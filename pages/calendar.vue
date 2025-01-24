@@ -1,5 +1,9 @@
 <template>
   <div class="mt-15">
+    <h1>Calendar</h1>
+    {{ events }}
+    <br />
+    <v-btn @click="dialog = true">Add Event</v-btn>
     <v-sheet class="d-flex" height="54" tile>
       <v-select
         v-model="type"
@@ -27,10 +31,22 @@
         :events="events"
         :view-mode="type"
         :weekdays="weekday"
-      ></v-calendar>
+      >
+        <template v-slot:event="{ event }">
+          <span @click="clickclick">Click</span>{{ event.id }}
+          {{ event.title }} {{ event.start }} {{ event.end }}
+        </template>
+      </v-calendar>
     </v-sheet>
   </div>
+  <v-dialog v-model="dialog" max-width="600">
+    <av-calendar-form
+      @closeDialog="dialog = false"
+      @getEvents="getEvents"
+    ></av-calendar-form>
+  </v-dialog>
 </template>
+
 <script>
 import { useDate } from "vuetify";
 
@@ -47,6 +63,26 @@ export default {
     ],
     value: [new Date()],
     events: [],
+    dialog: false,
+    eventsTest: [
+      {
+        title: "Weekly Meeting",
+        start: new Date("2025-01-23 09:00"),
+        end: new Date("2025-01-24 10:00"),
+      },
+      {
+        title: `Thomas' Birthday`,
+        start: new Date("2025-01-10"),
+        end: new Date("2025-01-10"),
+        allDay: true,
+      },
+      {
+        title: "Mash Potatoes",
+        start: new Date("2025-01-09 12:30"),
+        end: new Date("2025-01-09 15:30"),
+      },
+    ],
+    savedEvents: [],
     colors: [
       "blue",
       "indigo",
@@ -69,43 +105,51 @@ export default {
   }),
   mounted() {
     const adapter = useDate();
-    this.getEvents({
-      start: adapter.startOfDay(adapter.startOfMonth(new Date())),
-      end: adapter.endOfDay(adapter.endOfMonth(new Date())),
+    // this.getSavedEvents();
+    this.getEvents();
+    document.addEventListener("DOMContentLoaded", () => {
+      const chipContentDiv = document.querySelector(".v-btn");
+      if (chipContentDiv) {
+        chipContentDiv.addEventListener("click", () => {
+          console.log("Chip content clicked!");
+          // Your custom logic here
+        });
+      }
     });
   },
   methods: {
-    getEvents({ start, end }) {
-      const events = [];
-
-      const min = start;
-      const max = end;
-      const days = (max.getTime() - min.getTime()) / 86400000;
-      const eventCount = this.rnd(days, days + 20);
-
-      for (let i = 0; i < eventCount; i++) {
-        const allDay = this.rnd(0, 3) === 0;
-        const firstTimestamp = this.rnd(min.getTime(), max.getTime());
-        const first = new Date(firstTimestamp - (firstTimestamp % 900000));
-        const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-        const second = new Date(first.getTime() + secondTimestamp);
-
-        events.push({
-          title: this.titles[this.rnd(0, this.titles.length - 1)],
-          start: first,
-          end: second,
-          color: this.colors[this.rnd(0, this.colors.length - 1)],
-          allDay: !allDay,
-        });
+    async getEvents() {
+      const supabase = useSupabaseClient();
+      const { data, error } = await supabase.from("calendar_dates").select("*");
+      if (error) {
+        console.error(error);
+      } else {
+        this.events = this.convertEvents(data);
       }
-
-      this.events = events;
     },
+
+    convertEvents(data) {
+      const convertedEvents = data.map((event) => ({
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end),
+        allDay: event.allDay || false,
+        color: event.color || this.colors[this.rnd(0, this.colors.length - 1)],
+        title: event.title || "Untitled Event",
+        end: new Date(event.end),
+      }));
+      return convertedEvents;
+    },
+
     getEventColor(event) {
       return event.color;
     },
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
+    },
+
+    clickclick() {
+      console.log("clickclick");
     },
   },
 };
