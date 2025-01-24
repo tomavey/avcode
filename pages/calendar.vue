@@ -1,7 +1,7 @@
 <template>
   <div class="mt-15">
     <h1>Calendar</h1>
-    {{ events }}
+    <!-- {{ events }} -->
     <br />
     <v-btn @click="dialog = true">Add Event</v-btn>
     <v-sheet class="d-flex" height="54" tile>
@@ -33,8 +33,10 @@
         :weekdays="weekday"
       >
         <template v-slot:event="{ event }">
-          <span @click="clickclick">Click</span>{{ event.id }}
-          {{ event.title }} {{ event.start }} {{ event.end }}
+          <v-btn @click="clickclick(event.id)">Click</v-btn>
+          <p>
+            {{ event.id }} {{ event.title }} {{ event.start }} {{ event.end }}
+          </p>
         </template>
       </v-calendar>
     </v-sheet>
@@ -148,8 +150,8 @@ export default {
       return Math.floor((b - a + 1) * Math.random()) + a;
     },
 
-    clickclick() {
-      console.log("clickclick");
+    clickclick(id) {
+      console.log("clickclick", id);
     },
   },
 };
