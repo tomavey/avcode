@@ -1,45 +1,48 @@
 <template>
   <v-container class="calendar-form">
+    <!-- {{ formData }} -->
     <v-form>
-      <v-text-field label="Title" v-model="title"></v-text-field>
+      <v-text-field label="Title" v-model="formData.title"></v-text-field>
       <v-text-field
         label="Start"
-        v-model="start"
+        v-model="formData.start"
         prepend-icon="mdi-calendar"
         readonly
         @focus="showDateStartPicker = true"
       ></v-text-field>
       <v-date-picker
         v-if="showDateStartPicker"
-        v-model="start"
+        v-model="formData.start"
         show-adjacent-months
         @click="showDateStartPicker = false"
       ></v-date-picker>
       <v-text-field
         label="End"
-        v-model="end"
+        v-model="formData.end"
         prepend-icon="mdi-calendar"
         readonly
         @focus="showDateEndPicker = true"
       ></v-text-field>
       <v-date-picker
         v-if="showDateEndPicker"
-        v-model="end"
+        v-model="formData.end"
         @click="showDateEndPicker = false"
         show-adjacent-months
       ></v-date-picker>
 
-      <v-color-picker v-model="color" label="Color"></v-color-picker>
-      <v-checkbox v-model="all_day" label="All Day"></v-checkbox>
+      <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
+      <v-checkbox v-model="formData.all_day" label="All Day"></v-checkbox>
       <v-btn color="primary" @click="submitForm">Submit</v-btn>
     </v-form>
   </v-container>
 </template>
 
 <script setup>
-import { get } from "@vueuse/core";
+import { formatDate, get } from "@vueuse/core";
 
 const emit = defineEmits("closeDialog", getEvents);
+const props = defineProps(["formData"]);
+
 const closeDialog = () => emit("closeDialog");
 const getEvents = () => emit("getEvents");
 

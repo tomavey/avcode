@@ -3,7 +3,7 @@
     <h1>Calendar</h1>
     <!-- {{ events }} -->
     <br />
-    <v-btn @click="dialog = true">Add Event</v-btn>
+    <v-btn @click="openBlankForm">Add Event</v-btn>
     <v-sheet class="d-flex" height="54" tile>
       <v-select
         v-model="type"
@@ -32,11 +32,12 @@
         :view-mode="type"
         :weekdays="weekday"
       >
-        <template v-slot:event="{ event }">
-          <v-btn @click="clickclick(event.id)">Click</v-btn>
-          <p>
-            {{ event.id }} {{ event.title }} {{ event.start }} {{ event.end }}
-          </p>
+        <template v-slot:event="{ event, day, allDay }">
+          <p
+            class="mb-10 pointer"
+            v-html="thisEventDescription(event, allDay)"
+            @click="openForm(event)"
+          ></p>
         </template>
       </v-calendar>
     </v-sheet>
@@ -45,12 +46,42 @@
     <av-calendar-form
       @closeDialog="dialog = false"
       @getEvents="getEvents"
+      :formData="formData"
     ></av-calendar-form>
   </v-dialog>
 </template>
 
 <script setup>
 const supabase = useSupabaseClient();
+const { formatDateString, formatTime } = useFormating();
+
+const thisEventDescription = (event) => {
+  const eventText = `<p class="text-h5 text-center mt-5">${
+    event.title
+  }</p> <br/> Begin: ${formatTime(event.start)} <br/> End: ${formatTime(
+    event.end
+  )}`;
+  return eventText;
+};
+
+const openBlankForm = () => {
+  formData.value = {
+    title: "",
+    start: "",
+    end: "",
+    allDay: false,
+    color: "",
+  };
+  dialog.value = true;
+};
+
+const formData = ref({
+  title: "",
+  start: "",
+  end: "",
+  allDay: false,
+  color: "",
+});
 
 const type = ref("month");
 const types = ["month", "week", "day"];
@@ -64,6 +95,19 @@ const weekdays = [
 const value = ref([new Date()]);
 const events = ref([]);
 const dialog = ref(false);
+
+const openForm = (event) => {
+  console.log("openForm", event);
+  formData.value = {
+    title: event.title,
+    start: event.start,
+    end: event.end,
+    allDay: event.allDay,
+    color: event.color,
+  };
+  dialog.value = true;
+};
+
 const eventsTest = [
   {
     title: "Weekly Meeting",
@@ -134,7 +178,7 @@ const rnd = (a, b) => {
 };
 
 const clickclick = (id) => {
-  console.log("clickclick", id);
+  alert("clickclick", id);
 };
 
 onMounted(() => {
@@ -151,3 +195,13 @@ onMounted(() => {
   });
 });
 </script>
+
+<style scoped>
+.eventTitle {
+  font-weight: bold;
+}
+
+.pointer {
+  cursor: pointer;
+}
+</style>
