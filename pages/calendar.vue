@@ -31,6 +31,7 @@
         :events="events"
         :view-mode="type"
         :weekdays="weekday"
+        @click="openBlankForm"
       >
         <template v-slot:event="{ event, day, allDay }">
           <p
@@ -38,16 +39,21 @@
             v-html="thisEventDescription(event, allDay)"
             @click="openForm(event)"
           ></p>
+          <v-chip class="ma-1" x-small @click="openBlankForm(day)">new </v-chip>
         </template>
       </v-calendar>
     </v-sheet>
   </div>
   <v-dialog v-model="dialog" max-width="600">
-    <av-calendar-form
-      @closeDialog="dialog = false"
-      @getEvents="getEvents"
-      :formData="formData"
-    ></av-calendar-form>
+    <v-card>
+      <v-card-text style="max-height: 800px; overflow-y: auto">
+        <av-calendar-form
+          @closeDialog="dialog = false"
+          @getEvents="getEvents"
+          :formData="formData"
+        ></av-calendar-form>
+      </v-card-text>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -55,20 +61,33 @@
 const supabase = useSupabaseClient();
 const { formatDateString, formatTime } = useFormating();
 
+const newEvent = (day) => {
+  console.log("newEvent", day);
+};
+
+const nextEvent = (value) => {
+  console.log("nextEvent", value);
+};
+
 const thisEventDescription = (event) => {
-  const eventText = `<p class="text-h5 text-center mt-5">${
-    event.title
-  }</p> <br/> Begin: ${formatTime(event.start)} <br/> End: ${formatTime(
-    event.end
-  )}`;
+  const eventText = `
+  <p class="text-h5 text-center mt-5">${event.title}</p>
+  <div v-if="event.allDay === 'false'">
+  <p> ${formatTime(event.start)}</p>
+  <p> ${formatTime(event.end)}</p>
+  </div>
+  <div v-else>
+    All Day
+  </div>
+  `;
   return eventText;
 };
 
 const openBlankForm = () => {
   formData.value = {
     title: "",
-    start: "",
-    end: "",
+    start: null,
+    end: null,
     allDay: false,
     color: "",
   };
@@ -76,6 +95,7 @@ const openBlankForm = () => {
 };
 
 const formData = ref({
+  id: null,
   title: "",
   start: "",
   end: "",
@@ -99,6 +119,7 @@ const dialog = ref(false);
 const openForm = (event) => {
   console.log("openForm", event);
   formData.value = {
+    id: event.id,
     title: event.title,
     start: event.start,
     end: event.end,
@@ -161,7 +182,7 @@ const convertEvents = (data) => {
   const convertedEvents = data.map((event) => ({
     ...event,
     start: new Date(event.start),
-    end: new Date(event.end),
+    end: event.end ? new Date(event.end) : new Date(event.start),
     allDay: event.allDay || false,
     color: event.color || colors[rnd(0, colors.length - 1)],
     title: event.title || "Untitled Event",

@@ -1,6 +1,6 @@
 <template>
   <v-container class="calendar-form">
-    <!-- {{ formData }} -->
+    {{ formData }}
     <v-form>
       <v-text-field label="Title" v-model="formData.title"></v-text-field>
       <v-text-field
@@ -32,7 +32,7 @@
 
       <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
       <v-checkbox v-model="formData.all_day" label="All Day"></v-checkbox>
-      <v-btn color="primary" @click="submitForm">Submit</v-btn>
+      <v-btn color="primary" @click="submitForm(formData)">Submit</v-btn>
     </v-form>
   </v-container>
 </template>
@@ -40,11 +40,18 @@
 <script setup>
 import { formatDate, get } from "@vueuse/core";
 
-const emit = defineEmits("closeDialog", getEvents);
+const emit = defineEmits(["closeDialog", "getEvents"]);
 const props = defineProps(["formData"]);
 
-const closeDialog = () => emit("closeDialog");
-const getEvents = () => emit("getEvents");
+const formData = toRef(props.formData);
+
+const closeDialog = () => {
+  emit("closeDialog");
+};
+
+const getEvents = () => {
+  emit("getEvents");
+};
 
 const supabase = useSupabaseClient();
 const { user } = useAuth();
@@ -56,27 +63,30 @@ const title = ref("");
 const start = ref(null);
 const end = ref(null);
 const color = ref("");
-290;
 const all_day = ref(false);
 const menuStart = ref(false);
 const menuEnd = ref(false);
 
-const submitForm = async () => {
+const submitForm = async (formData) => {
+  console.log("submitting form", formData);
   const obj = {
-    title: title.value,
-    start: start.value,
-    end: end.value,
-    color: color.value,
-    all_day: all_day.value,
+    title: formData.title,
+    start: formData.start,
+    end: formData.end,
+    color: formData.color,
+    all_day: formData.all_day,
     email: user.value.email,
     created_at: new Date(),
     created_by: user.value.id,
   };
+  if (formData.id) {
+    obj.id = formData.id;
+  }
   console.log(obj);
 
   const { data, error } = await supabase
     .from("calendar_dates")
-    .insert(obj)
+    .upsert(obj)
     .select("*");
 
   if (error) {
