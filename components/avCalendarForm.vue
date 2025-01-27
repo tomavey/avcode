@@ -32,14 +32,24 @@
 
       <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
       <v-checkbox v-model="formData.all_day" label="All Day"></v-checkbox>
+      <v-row justify="space-around">
+        <v-time-picker v-if="modal2" v-model="time"></v-time-picker>
+        <v-time-picker
+          v-model="startTime"
+          :allowed-hours="allowedHours"
+          :allowed-minutes="allowedMinutes"
+          format="24hr"
+          max="22:15"
+          min="9:30"
+          scrollable
+        ></v-time-picker>
+      </v-row>
       <v-btn color="primary" @click="submitForm(formData)">Submit</v-btn>
     </v-form>
   </v-container>
 </template>
 
 <script setup>
-import { formatDate, get } from "@vueuse/core";
-
 const emit = defineEmits(["closeDialog", "getEvents"]);
 const props = defineProps(["formData"]);
 
@@ -48,6 +58,8 @@ const formData = toRef(props.formData);
 const closeDialog = () => {
   emit("closeDialog");
 };
+
+const modeal2 = ref();
 
 const getEvents = () => {
   emit("getEvents");

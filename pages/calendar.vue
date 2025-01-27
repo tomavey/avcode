@@ -60,6 +60,7 @@
 <script setup>
 const supabase = useSupabaseClient();
 const { formatDateString, formatTime } = useFormating();
+import { VTimePicker } from "vuetify/labs/VTimePicker";
 
 const newEvent = (day) => {
   console.log("newEvent", day);
@@ -87,7 +88,9 @@ const openBlankForm = () => {
   formData.value = {
     title: "",
     start: null,
+    startTime: null,
     end: null,
+    endTime: null,
     allDay: false,
     color: "",
   };
@@ -98,7 +101,9 @@ const formData = ref({
   id: null,
   title: "",
   start: "",
+  startTime: "",
   end: "",
+  endTime: "",
   allDay: false,
   color: "",
 });
