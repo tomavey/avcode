@@ -10,7 +10,7 @@
       <div v-if="!formData.allDay">
         <v-text-field
           label="Start"
-          v-model="formData.startDate"
+          v-model="formData.start"
           prepend-icon="mdi-calendar"
           readonly
           @focus="showDateStartPicker = true"
@@ -40,7 +40,7 @@
 
         <v-text-field
           label="End"
-          v-model="formData.endDate"
+          v-model="formData.end"
           prepend-icon="mdi-calendar"
           readonly
           @focus="showDateEndPicker = true"
@@ -97,11 +97,21 @@ const combinedEnd = ref("");
 
 watch(formData, (newVal) => {
   console.log("formData updated", newVal);
-  combinedStart.value = updateCombinedDateTime(
-    newVal.startDate,
-    newVal.startTime
-  );
+  // formData.start = updateCombinedDateTime(newVal.startDate, newVal.startTime);
   // updated.value = "Updated";
+});
+
+formData.start = computed(() => {
+  return updateCombinedDateTime(formData.startDate, formData.startTime);
+});
+
+formData.end = computed(() => {
+  return updateCombinedDateTime(formData.endDate, formData.endTime);
+});
+
+watch([() => formData.startDate, () => formData.startTime], () => {
+  formData.start = combinedStart.value;
+  updated.value = "Updated";
 });
 
 const supabase = useSupabaseClient();
