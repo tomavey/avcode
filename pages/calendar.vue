@@ -49,6 +49,7 @@
       <v-card-text style="max-height: 800px; overflow-y: auto">
         <av-calendar-form
           @closeDialog="dialog = false"
+          ormData.startDate
           @getEvents="getEvents"
           :formData="formData"
         ></av-calendar-form>
@@ -77,7 +78,7 @@ const thisEventDescription = (event) => {
   <p> ${formatTime(event.start)}</p>
   <p> ${formatTime(event.end)}</p>
   </div>
-  <div v-else>
+  <div v-else>ormData.startDate
     All Day
   </div>
   `;
@@ -88,11 +89,13 @@ const openBlankForm = () => {
   formData.value = {
     title: "",
     start: null,
-    startTime: null,
     end: null,
+    startDate: null,
+    startTime: null,
+    endDate: null,
     endTime: null,
-    allDay: false,
-    color: "",
+    allDay: true,
+    color: null,
   };
   dialog.value = true;
 };
@@ -101,10 +104,12 @@ const formData = ref({
   id: null,
   title: "",
   start: "",
-  startTime: "",
   end: "",
+  startDate: "",
+  startTime: "",
+  endDate: "",
   endTime: "",
-  allDay: false,
+  allDay: true,
   color: "",
 });
 

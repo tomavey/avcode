@@ -1,72 +1,116 @@
 <template>
   <v-container class="calendar-form">
-    {{ formData }}
+    {{ formData }}<br /><br />
+    combinedStart: {{ combinedStart }}<br />
     <v-form>
       <v-text-field label="Title" v-model="formData.title"></v-text-field>
-      <v-text-field
-        label="Start"
-        v-model="formData.start"
-        prepend-icon="mdi-calendar"
-        readonly
-        @focus="showDateStartPicker = true"
-      ></v-text-field>
-      <v-date-picker
-        v-if="showDateStartPicker"
-        v-model="formData.start"
-        show-adjacent-months
-        @click="showDateStartPicker = false"
-      ></v-date-picker>
-      <v-text-field
-        label="End"
-        v-model="formData.end"
-        prepend-icon="mdi-calendar"
-        readonly
-        @focus="showDateEndPicker = true"
-      ></v-text-field>
-      <v-date-picker
-        v-if="showDateEndPicker"
-        v-model="formData.end"
-        @click="showDateEndPicker = false"
-        show-adjacent-months
-      ></v-date-picker>
 
-      <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
-      <v-checkbox v-model="formData.all_day" label="All Day"></v-checkbox>
-      <v-row justify="space-around">
-        <v-time-picker v-if="modal2" v-model="time"></v-time-picker>
+      <v-checkbox v-model="formData.allDay" label="All Day"></v-checkbox>
+
+      <div v-if="!formData.allDay">
+        <v-text-field
+          label="Start"
+          v-model="formData.startDate"
+          prepend-icon="mdi-calendar"
+          readonly
+          @focus="showDateStartPicker = true"
+        ></v-text-field>
+
+        <v-date-picker
+          v-if="showDateStartPicker"
+          v-model="formData.startDate"
+          show-adjacent-months
+          @click="showDateStartPicker = false"
+        ></v-date-picker>
+
+        {{ formData.startTime }}<br />
+        {{ updated }}
+
         <v-time-picker
-          v-model="startTime"
+          v-if="formData.startDate"
+          v-model="formData.startTime"
           :allowed-hours="allowedHours"
           :allowed-minutes="allowedMinutes"
           format="24hr"
           max="22:15"
           min="9:30"
           scrollable
+          title="Start Time"
         ></v-time-picker>
-      </v-row>
+
+        <v-text-field
+          label="End"
+          v-model="formData.endDate"
+          prepend-icon="mdi-calendar"
+          readonly
+          @focus="showDateEndPicker = true"
+        ></v-text-field>
+
+        <v-date-picker
+          v-if="showDateEndPicker"
+          v-model="formData.endDate"
+          @click="showDateEndPicker = false"
+          show-adjacent-months
+        ></v-date-picker>
+
+        {{ formData.endTime }}
+
+        <v-time-picker
+          v-if="formData.start"
+          v-model="formData.endTime"
+          :allowed-hours="allowedHours"
+          :allowed-minutes="allowedMinutes"
+          format="24hr"
+          max="22:15"
+          min="9:30"
+          scrollable
+          title="End Time"
+          false
+        ></v-time-picker>
+
+        <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
+      </div>
       <v-btn color="primary" @click="submitForm(formData)">Submit</v-btn>
     </v-form>
   </v-container>
 </template>
 
 <script setup>
+const { updateCombinedDateTime } = useDateTimeCombiner();
 const emit = defineEmits(["closeDialog", "getEvents"]);
 const props = defineProps(["formData"]);
 
-const formData = toRef(props.formData);
+const formData = props.formData;
 
 const closeDialog = () => {
   emit("closeDialog");
 };
 
-const modeal2 = ref();
-
 const getEvents = () => {
   emit("getEvents");
 };
 
+const updated = ref("Not");
+
+const combinedStart = ref("");
+const combinedEnd = ref("");
+
+watch(formData, (newVal) => {
+  console.log("formData updated", newVal);
+  combinedStart.value = updateCombinedDateTime(
+    newVal.startDate,
+    newVal.startTime
+  );
+  // updated.value = "Updated";
+});
+
 const supabase = useSupabaseClient();
 const { user } = useAuth();
+
+const timeStep = ref("10:10");
+const allowedHours = (v) => v % 2;
+const allowedMinutes = (v) => v >= 10 && v <= 50;
+const allowedStep = (m) => m % 10 === 0;
 
 const showDateStartPicker = ref(false);
 const showDateEndPicker = ref(false);
@@ -75,7 +119,7 @@ const title = ref("");
 const start = ref(null);
 const end = ref(null);
 const color = ref("");
-const all_day = ref(false);
+const allDay = ref(false);
 const menuStart = ref(false);
 const menuEnd = ref(false);
 
@@ -86,7 +130,7 @@ const submitForm = async (formData) => {
     start: formData.start,
     end: formData.end,
     color: formData.color,
-    all_day: formData.all_day,
+    allDay: formData.allDay,
     email: user.value.email,
     created_at: new Date(),
     created_by: user.value.id,
