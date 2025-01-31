@@ -1,7 +1,6 @@
 <template>
   <v-container class="calendar-form">
-    {{ formData }}<br /><br />
-    combinedStart: {{ combinedStart }}<br />
+    <!-- {{ formData }}<br /><br /> -->
     <v-form>
       <v-text-field label="Title" v-model="formData.title"></v-text-field>
 
@@ -10,7 +9,7 @@
       <div v-if="!formData.allDay">
         <v-text-field
           label="Start"
-          v-model="formData.start"
+          v-model="start"
           prepend-icon="mdi-calendar"
           readonly
           @focus="showDateStartPicker = true"
@@ -40,7 +39,7 @@
 
         <v-text-field
           label="End"
-          v-model="formData.end"
+          v-model="end"
           prepend-icon="mdi-calendar"
           readonly
           @focus="showDateEndPicker = true"
@@ -56,7 +55,7 @@
         {{ formData.endTime }}
 
         <v-time-picker
-          v-if="formData.start"
+          v-if="formData.endDate"
           v-model="formData.endTime"
           :allowed-hours="allowedHours"
           :allowed-minutes="allowedMinutes"
@@ -77,6 +76,9 @@
 
 <script setup>
 const { updateCombinedDateTime } = useDateTimeCombiner();
+const supabase = useSupabaseClient();
+const { user } = useAuth();
+
 const emit = defineEmits(["closeDialog", "getEvents"]);
 const props = defineProps(["formData"]);
 
@@ -90,51 +92,35 @@ const getEvents = () => {
   emit("getEvents");
 };
 
-const updated = ref("Not");
-
-const combinedStart = ref("");
-const combinedEnd = ref("");
-
-watch(formData, (newVal) => {
-  console.log("formData updated", newVal);
-  // formData.start = updateCombinedDateTime(newVal.startDate, newVal.startTime);
-  // updated.value = "Updated";
+const start = computed(() => {
+  return updateCombinedDateTime(
+    formData.value.startDate,
+    formData.value.startTime
+  );
 });
 
-formData.start = computed(() => {
-  return updateCombinedDateTime(formData.startDate, formData.startTime);
+watch(start, (newVal) => {
+  console.log("start updated", newVal);
+  formData.value.start = newVal;
 });
 
-formData.end = computed(() => {
-  return updateCombinedDateTime(formData.endDate, formData.endTime);
+const end = computed(() => {
+  return updateCombinedDateTime(formData.value.endDate, formData.value.endTime);
 });
 
-watch([() => formData.startDate, () => formData.startTime], () => {
-  formData.start = combinedStart.value;
-  updated.value = "Updated";
+watch(end, (newVal) => {
+  console.log("end updated", newVal);
+  formData.value.end = newVal;
 });
-
-const supabase = useSupabaseClient();
-const { user } = useAuth();
 
 const timeStep = ref("10:10");
 const allowedHours = (v) => v % 2;
 const allowedMinutes = (v) => v >= 10 && v <= 50;
-const allowedStep = (m) => m % 10 === 0;
 
 const showDateStartPicker = ref(false);
 const showDateEndPicker = ref(false);
 
-const title = ref("");
-const start = ref(null);
-const end = ref(null);
-const color = ref("");
-const allDay = ref(false);
-const menuStart = ref(false);
-const menuEnd = ref(false);
-
 const submitForm = async (formData) => {
-  console.log("submitting form", formData);
   const obj = {
     title: formData.title,
     start: formData.start,

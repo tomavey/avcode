@@ -86,7 +86,7 @@ const thisEventDescription = (event) => {
 };
 
 const openBlankForm = () => {
-  formData.value = {
+  formData.value = ref({
     title: "",
     start: null,
     end: null,
@@ -96,7 +96,7 @@ const openBlankForm = () => {
     endTime: null,
     allDay: true,
     color: null,
-  };
+  });
   dialog.value = true;
 };
 
