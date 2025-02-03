@@ -1,5 +1,6 @@
 import { createVuetify } from "vuetify";
 import { VTimePicker } from "vuetify/labs/components";
+import { VPicker } from "vuetify/labs/VPicker";
 import { VCalendar } from "vuetify/labs/VCalendar";
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -7,6 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     components: {
       VCalendar,
       VTimePicker,
+      VPicker,
     },
   });
 

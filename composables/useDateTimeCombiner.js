@@ -3,6 +3,21 @@
 export function useDateTimeCombiner(startDateString, startTimeString) {
   const combinedDate = ref(null);
 
+  const convertTo24HourFormat = (timeString) => {
+    const [time, modifier] = timeString.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+
+    if (modifier === "PM" && hours !== 12) {
+      hours += 12;
+    } else if (modifier === "AM" && hours === 12) {
+      hours = 0;
+    }
+
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
   const updateCombinedDateTime = (dateString, timeString) => {
     if (!dateString || !timeString) {
       combinedDate.value = "xxxx-xx-xxTxx:xx:xx"; // Or handle the error as needed
@@ -10,6 +25,7 @@ export function useDateTimeCombiner(startDateString, startTimeString) {
     }
 
     try {
+      timeString = convertTo24HourFormat(timeString);
       const dateObj = new Date(dateString);
       const [hours, minutes] = timeString.split(":").map(Number);
 

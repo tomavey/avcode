@@ -1,12 +1,12 @@
 <template>
   <v-container class="calendar-form">
-    <!-- {{ formData }}<br /><br /> -->
+    {{ formData }}<br /><br />
     <v-form>
       <v-text-field label="Title" v-model="formData.title"></v-text-field>
 
       <v-checkbox v-model="formData.allDay" label="All Day"></v-checkbox>
 
-      <div v-if="!formData.allDay">
+      <div>
         <v-text-field
           label="Start"
           v-model="start"
@@ -15,27 +15,20 @@
           @focus="showDateStartPicker = true"
         ></v-text-field>
 
+        <!-- // if the start field is focused, show the date picker -->
         <v-date-picker
           v-if="showDateStartPicker"
           v-model="formData.startDate"
           show-adjacent-months
-          @click="showDateStartPicker = false"
         ></v-date-picker>
 
-        {{ formData.startTime }}<br />
-        {{ updated }}
-
-        <v-time-picker
-          v-if="formData.startDate"
+        <!-- // if the start field is focused AND this is not an all day event, show
+        the date picker -->
+        <av-time-picker
+          v-if="showDateStartPicker && !formData.allDay"
           v-model="formData.startTime"
-          :allowed-hours="allowedHours"
-          :allowed-minutes="allowedMinutes"
-          format="24hr"
-          max="22:15"
-          min="9:30"
-          scrollable
-          title="Start Time"
-        ></v-time-picker>
+          :use24HourFormat="false"
+        />
 
         <v-text-field
           label="End"
@@ -45,27 +38,15 @@
           @focus="showDateEndPicker = true"
         ></v-text-field>
 
-        <v-date-picker
-          v-if="showDateEndPicker"
-          v-model="formData.endDate"
-          @click="showDateEndPicker = false"
-          show-adjacent-months
-        ></v-date-picker>
+        <div v-if="showDateStartPicker" class="mb-5">
+          <v-date-picker
+            v-model="formData.endDate"
+            @click="showDateEndPicker = false"
+            show-adjacent-months
+          ></v-date-picker>
 
-        {{ formData.endTime }}
-
-        <v-time-picker
-          v-if="formData.endDate"
-          v-model="formData.endTime"
-          :allowed-hours="allowedHours"
-          :allowed-minutes="allowedMinutes"
-          format="24hr"
-          max="22:15"
-          min="9:30"
-          scrollable
-          title="End Time"
-          false
-        ></v-time-picker>
+          <av-time-picker v-model="formData.endTime" :use24HourFormat="false" />
+        </div>
 
         <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
       </div>
@@ -113,7 +94,6 @@ watch(end, (newVal) => {
   formData.value.end = newVal;
 });
 
-const timeStep = ref("10:10");
 const allowedHours = (v) => v % 2;
 const allowedMinutes = (v) => v >= 10 && v <= 50;
 
