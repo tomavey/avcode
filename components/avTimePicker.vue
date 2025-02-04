@@ -53,8 +53,6 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from "vue";
-
 const props = defineProps({
   modelValue: {
     type: String,

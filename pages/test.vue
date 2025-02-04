@@ -1,6 +1,6 @@
 <template>
   <div>
-    <av-time-picker v-model="start" :use24HourFormat="false" />
+    <av-date-time-picker />
   </div>
 </template>
 
