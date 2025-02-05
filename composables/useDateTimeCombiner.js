@@ -19,9 +19,11 @@ export function useDateTimeCombiner(startDateString, startTimeString) {
   };
 
   const updateCombinedDateTime = (dateString, timeString) => {
-    if (!dateString || !timeString) {
-      combinedDate.value = "xxxx-xx-xxTxx:xx:xx"; // Or handle the error as needed
-      return;
+    if (!timeString) {
+      return dateString;
+    }
+    if (!dateString && !timeString) {
+      return null; // Or handle the error as needed
     }
 
     try {
