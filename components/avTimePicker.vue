@@ -14,7 +14,7 @@
         <div class="time-selection">
           <div class="time-column">
             <label for="hours">Hours:</label>
-            <select id="hours" v-model="selectedHours" @change="confirmTime">
+            <select id="hours" v-model="selectedHours">
               <option v-for="hour in hours" :key="hour" :value="hour">
                 {{ formatHour(hour) }}
               </option>
@@ -37,7 +37,7 @@
             </select>
           </div>
           <div class="ampm-column" v-if="use24HourFormat === false">
-            <select v-model="selectedAMPM" @change="confirmTime">
+            <select v-model="selectedAMPM">
               <option value="AM">AM</option>
               <option value="PM">PM</option>
             </select>
@@ -53,6 +53,8 @@
 </template>
 
 <script setup>
+const { formatDateString } = useFormating();
+
 const props = defineProps({
   modelValue: {
     type: String,

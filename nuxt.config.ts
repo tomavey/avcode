@@ -3,7 +3,12 @@ export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/supabase", "vuetify-nuxt-module", "nuxt-tiptap-editor"],
+  modules: [
+    "@nuxtjs/supabase",
+    "vuetify-nuxt-module",
+    "nuxt-tiptap-editor",
+    "@vueuse/nuxt",
+  ],
   supabase: {
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,

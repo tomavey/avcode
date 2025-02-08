@@ -45,7 +45,11 @@
             show-adjacent-months
           ></v-date-picker>
 
-          <av-time-picker v-model="formData.endTime" :use24HourFormat="false" />
+          <av-time-picker
+            v-model="formData.endTime"
+            :use24HourFormat="false"
+            @update:model-value="update"
+          />
         </div>
 
         <v-color-picker v-model="formData.color" label="Color"></v-color-picker>
@@ -99,6 +103,10 @@ const allowedMinutes = (v) => v >= 10 && v <= 50;
 
 const showDateStartPicker = ref(false);
 const showDateEndPicker = ref(false);
+
+const update = (value) => {
+  console.log("update", value);
+};
 
 const submitForm = async (formData) => {
   const obj = {
