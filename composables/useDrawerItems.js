@@ -48,6 +48,14 @@ const drawerItems = [
     includeIndexPage: true,
   },
   {
+    name: "Tests",
+    path: "/test",
+    rights: "admin",
+    icon: "mdi-calendar-check",
+    sortOrder: 9,
+    includeIndexPage: true,
+  },
+  {
     name: "Login",
     action: "login",
     rights: "admin",
