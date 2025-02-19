@@ -12,13 +12,14 @@
   "dependencies": {
     "@tiptap/extension-text-align": "^2.11.0",
     "@tiptap/extension-youtube": "^2.11.0",
-    "@vueuse/core": "^12.3.0",
+    "@vueuse/core": "^12.7.0",
     "nuxt": "^3.14.1592",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^1.4.3",
+    "@vueuse/nuxt": "^12.7.0",
     "nuxt-tiptap-editor": "^2.1.4",
     "vuetify-nuxt-module": "^0.18.3"
   }
