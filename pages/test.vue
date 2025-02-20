@@ -1,11 +1,11 @@
 <template>
   <div>
     <h1>Test</h1>
-    <p>
-      This is a test page to test the modal component. Click the button below to
-      open the modal.
+    <p class="mb-4">
+      This is a test page to test the avModal.vue component. Click the button
+      below to open the modal.
     </p>
-    <v-btn @click="showModal = true">
+    <v-btn block color="primary" @click="showModal = true">
       Open full screen modal! (With teleport!)
     </v-btn>
 
@@ -14,7 +14,9 @@
         <h3>My Custom Modal Title</h3>
       </template>
       <template #body>
-        <p>My Custom Body</p>
+        <v-text-field label="Name" />
+        <v-text-field label="Email" />
+        <v-text-field label="Phone" />
       </template>
     </av-modal>
   </div>

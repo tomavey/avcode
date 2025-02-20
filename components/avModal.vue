@@ -1,7 +1,7 @@
 <template>
   <Transition name="modal">
     <Teleport to="body">
-      <div v-if="isVisible" class="modal-overlay">
+      <div v-if="isVisible" class="modal-overlay" tabindex="0">
         <div class="modalContent" ref="modalContent">
           <slot name="header">
             <h2 class="modal-title">{{ header }}</h2>
@@ -49,6 +49,26 @@ const emits = defineEmits(["close"]);
 const close = () => {
   emits("close");
 };
+
+const handleKeydown = (event) => {
+  if (event.key === "Escape") {
+    if (
+      modalContent.value &&
+      modalContent.value.contains(document.activeElement)
+    ) {
+      return;
+    }
+    close();
+  }
+};
+
+onMounted(() => {
+  document.addEventListener("keydown", handleKeydown);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("keydown", handleKeydown);
+});
 
 onClickOutside(modalContent, () => {
   close();
