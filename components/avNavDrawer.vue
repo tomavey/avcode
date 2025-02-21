@@ -13,6 +13,13 @@
         <v-list-item-title>{{ item.name }}</v-list-item-title>
       </v-list-item>
     </v-list>
+    <v-list>
+      <v-list-item v-for="item in combinedDrawerItems">
+        <NuxtLink :to="item.path" @click="handleClick(item)">{{
+          item.name
+        }}</NuxtLink>
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
   <v-dialog
     v-model="showLoginDialog"
@@ -47,6 +54,11 @@ const handleLogout = () => {
 
 const closeLoginDialog = () => {
   showLoginDialog.value = false;
+  const handleKeydown = (event) => {
+    if (event.key === "Escape") {
+      close();
+    }
+  };
 };
 
 const openLoginDialog = () => {

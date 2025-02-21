@@ -16,4 +16,11 @@ export default defineNuxtConfig({
   tiptap: {
     prefix: "Tiptap", //prefix for Tiptap imports, composables not included
   },
+  css: ["@/assets/css/main.css"],
+  app: {
+    pageTransition: {
+      name: "page",
+      mode: "out-in",
+    },
+  },
 });
