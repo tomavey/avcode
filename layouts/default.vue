@@ -4,7 +4,7 @@
     <av-nav-drawer />
 
     <main>
-      <v-container class="mt-12">
+      <v-container class="mt-15">
         <slot />
       </v-container>
     </main>
